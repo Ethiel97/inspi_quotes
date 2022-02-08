@@ -3,13 +3,18 @@ import 'package:google_fonts/google_fonts.dart';
 
 import 'colors.dart';
 
-var textStyle = GoogleFonts.montserrat(
+//sora
+//epilogue
+//oxygen
+//work sans
+
+var textStyle = GoogleFonts.workSans(
   fontSize: 17,
   fontWeight: FontWeight.normal,
   color: darkColor,
 );
 
-var secondaryTextStyle = GoogleFonts.lato(
+var secondaryTextStyle = GoogleFonts.epilogue(
   fontSize: 14,
   fontWeight: FontWeight.normal,
 );

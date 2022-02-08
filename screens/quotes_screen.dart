@@ -62,7 +62,10 @@ class _QuotesScreenState extends State<QuotesScreen> {
             height: 24,
           ),
           TCard(
-            size: Size(100.w, 60.h),
+            size: Size(
+              100.w,
+              60.h,
+            ),
             controller: _controller,
             cards: quoteViewModel.quotes
                 .map(

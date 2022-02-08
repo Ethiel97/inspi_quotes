@@ -7,6 +7,7 @@ import 'package:sizer/sizer.dart';
 import 'package:smart_quotes/utils/app_router.dart';
 import 'package:smart_quotes/utils/colors.dart';
 import 'package:smart_quotes/utils/local_storage.dart';
+import 'package:smart_quotes/utils/text_styles.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -111,10 +112,25 @@ class _SplashScreenState extends State<SplashScreen>
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: <Widget>[
-                            Icon(
-                              IconlyBold.discovery,
-                              color: Colors.white,
-                              size: 20.w,
+                            Material(
+                              child: Container(
+                                height: 15.w,
+                                width: 15.w,
+                                alignment: Alignment.center,
+                                decoration: BoxDecoration(
+                                  color: accentColor,
+                                  shape: BoxShape.rectangle,
+                                ),
+                                child: Text(
+                                  "I.",
+                                  style: textStyle.apply(
+                                    color: Colors.white,
+                                    fontSizeDelta: 3,
+                                    fontWeightDelta: 5,
+                                  ),
+                                ),
+                              ),
+                              type: MaterialType.transparency,
                             ),
                             SizedBox(height: 10.h),
                             Material(

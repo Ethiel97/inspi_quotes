@@ -4,7 +4,6 @@ import 'package:smart_quotes/models/quote.dart';
 import 'package:smart_quotes/utils/colors.dart';
 import 'package:smart_quotes/utils/text_styles.dart';
 import 'package:tinycolor2/tinycolor2.dart';
-import 'package:sizer/sizer.dart';
 
 class WQuoteCard extends StatelessWidget {
   const WQuoteCard({
@@ -25,11 +24,15 @@ class WQuoteCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(
             20,
           ),
+          border: Border.all(
+            color: Colors.white.withOpacity(.092),
+            width: .8,
+          ),
           boxShadow: [
             BoxShadow(
               offset: const Offset(0, 4),
               blurRadius: 8,
-              color: TinyColor(darkColor).color.withOpacity(.8),
+              color: TinyColor(darkColor).color.withOpacity(.02),
             )
           ],
         ),
@@ -41,11 +44,14 @@ class WQuoteCard extends StatelessWidget {
               spacing: 8.0,
               children: quote.tags
                   .map(
-                    (e) => Text(
-                      "#$e",
-                      style: textStyle.apply(
-                        fontSizeDelta: -4,
-                        color: TinyColor(Colors.white).color.withOpacity(.8),
+                    (e) => InkWell(
+                      onTap: () {},
+                      child: Text(
+                        "#$e",
+                        style: textStyle.apply(
+                          fontSizeDelta: -4,
+                          color: TinyColor(Colors.white).color.withOpacity(.8),
+                        ),
                       ),
                     ),
                   )
@@ -67,7 +73,6 @@ class WQuoteCard extends StatelessWidget {
                 ),
               ),
             ),
-
             const SizedBox(
               height: 16,
             ),
@@ -104,7 +109,7 @@ class WQuoteCard extends StatelessWidget {
                 onPressed: () {},
                 color: Colors.white,
                 icon: const Icon(
-                  IconlyBold.bookmark,
+                  Icons.bookmark_border_outlined
                 ),
               ),
             )
