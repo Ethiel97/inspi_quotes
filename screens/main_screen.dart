@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:provider/provider.dart';
+import 'package:sizer/sizer.dart';
 import 'package:smart_quotes/providers/navigation_provider.dart';
 import 'package:smart_quotes/screens/home_screen.dart';
+import 'package:smart_quotes/screens/quotes_screen.dart';
 import 'package:smart_quotes/utils/colors.dart';
 import 'package:smart_quotes/utils/text_styles.dart';
 
@@ -17,7 +19,7 @@ class _MainScreenState extends State<MainScreen> {
   late NavigationProvider _navigationProvider;
 
   List<Widget> screens = [
-    const HomeScreen(key: ValueKey("home")),
+    const QuotesScreen(key: ValueKey("quotes")),
     const HomeScreen(key: ValueKey("home")),
     const HomeScreen(key: ValueKey("home")),
   ];
@@ -64,10 +66,55 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) => Scaffold(
         backgroundColor: screenBackgroundColor,
-        body: Center(
-          child: screens.elementAt(
-            _navigationProvider.currentIndex,
+        extendBodyBehindAppBar: true,
+        extendBody: true,
+        appBar: PreferredSize(
+          preferredSize: const Size.fromHeight(0.0),
+          child: AppBar(
+            backgroundColor: Colors.transparent,
+            elevation: 0.0,
           ),
+        ),
+        body: ListView(
+          physics: const BouncingScrollPhysics(),
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(
+                left: 24.0,
+                top: 10.0,
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Container(
+                    height: 10.w,
+                    width: 10.w,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      color: accentColor,
+                      shape: BoxShape.rectangle,
+                    ),
+                    child: Text(
+                      "S.",
+                      style: textStyle.apply(
+                        color: Colors.white,
+                        fontSizeDelta: 3,
+                        fontWeightDelta: 5,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(
+              height: 36,
+            ),
+            Center(
+              child: screens.elementAt(
+                _navigationProvider.currentIndex,
+              ),
+            ),
+          ],
         ),
         bottomNavigationBar: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,

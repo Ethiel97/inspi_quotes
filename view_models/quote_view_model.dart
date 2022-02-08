@@ -10,7 +10,6 @@ class QuoteViewModel extends BaseViewModel {
 
   late Quote quote;
 
-  String? errorMessage;
 
   @override
   FutureOr<void> init() async {
@@ -23,6 +22,7 @@ class QuoteViewModel extends BaseViewModel {
       quotes = await apiRepository.getQuotes(query: query);
       changeStatus();
     } catch (e) {
+      print(e);
       debugPrint(e.toString());
 
       quotes = [];

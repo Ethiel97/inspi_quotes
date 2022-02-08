@@ -12,9 +12,7 @@ Quote _$QuoteFromJson(Map<String, dynamic> json) => Quote(
       authorSlug: json['authorSlug'] as String,
       length: json['length'] as int,
       content: json['content'] as String,
-      tags: (json['tags'] as List<dynamic>)
-          .map((e) => Tag.fromJson(e as Map<String, dynamic>))
-          .toList(),
+      tags: (json['tags'] as List<dynamic>).map((e) => e as String).toList(),
       dateAdded: json['dateAdded'] as String,
     );
 

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/route_manager.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
@@ -8,8 +9,9 @@ import 'package:smart_quotes/utils/text_styles.dart';
 import 'screens/splash_screen.dart';
 import 'utils/app_router.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await dotenv.load(fileName: '.env');
 
   runApp(
     MultiProvider(

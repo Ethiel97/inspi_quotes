@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:http_interceptor/http/interceptor_contract.dart';
 import 'package:http_interceptor/models/request_data.dart';
@@ -15,24 +16,25 @@ class ApiInterceptor implements InterceptorContract {
 
   @override
   Future<ResponseData> interceptResponse({required ResponseData data}) async {
-    /*print(
-        "{REQUEST: ${data.url}\n STATUS CODE: ${data.statusCode}\nBODY: ${jsonDecode(data.body)}\n");*/
-
     Map<String, dynamic> parsedData = jsonDecode(data.body!);
 
+    bool isResourceList = parsedData.containsKey('results');
+
+    var responseData = isResourceList ? parsedData['results'] : parsedData;
+
+    var dataBytes = Uint8List.fromList(jsonEncode(responseData).codeUnits);
+
     return ResponseData(
-      data.bodyBytes,
+      dataBytes,
       data.statusCode,
       isRedirect: data.isRedirect,
       headers: data.headers,
       request: data.request,
       persistentConnection: data.persistentConnection,
       contentLength: data.contentLength,
-      body: jsonDecode(parsedData.containsKey('results')
-          ? parsedData['results']
-          : parsedData),
+      body: isResourceList
+          ? jsonEncode(parsedData['results'])
+          : jsonEncode(parsedData),
     );
-
-    // return data;
   }
 }

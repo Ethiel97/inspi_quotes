@@ -10,6 +10,8 @@ abstract class BaseViewModel extends ChangeNotifier {
   bool _isInitializeDone = false;
   bool _hasError = false;
 
+  String errorMessage="";
+
   FutureOr<void> _initState;
 
   final APIRepository apiRepository = APIRepository(apiUrl: apiUrl);

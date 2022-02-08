@@ -1,11 +1,11 @@
 import 'package:json_annotation/json_annotation.dart';
 
 import 'tag.dart';
+
 part 'quote.g.dart';
 
 @JsonSerializable()
 class Quote {
-
   @JsonKey(name: "_id")
   final String id;
 
@@ -15,7 +15,7 @@ class Quote {
 
   final int length;
 
-  final List<Tag> tags;
+  final List<String> tags;
 
   final String dateAdded;
 
@@ -31,10 +31,7 @@ class Quote {
     required this.dateAdded,
   });
 
-  factory Quote.fromJson(Map<String, dynamic> json) =>
-      _$QuoteFromJson(json);
+  factory Quote.fromJson(Map<String, dynamic> json) => _$QuoteFromJson(json);
 
   Map<String, dynamic> toJson() => _$QuoteToJson(this);
-
-
 }

@@ -3,7 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 import 'colors.dart';
 
-var textStyle = GoogleFonts.nunitoSans(
+var textStyle = GoogleFonts.montserrat(
   fontSize: 17,
   fontWeight: FontWeight.normal,
   color: darkColor,

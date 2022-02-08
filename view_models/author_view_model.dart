@@ -10,8 +10,6 @@ class AuthorViewModel extends BaseViewModel {
 
   late Author author;
 
-  String? errorMessage;
-
   @override
   FutureOr<void> init() {}
 
@@ -27,7 +25,6 @@ class AuthorViewModel extends BaseViewModel {
 
       error = true;
       errorMessage = "Oops, something went wrong";
-
     } finally {
       changeStatus();
     }
@@ -41,7 +38,6 @@ class AuthorViewModel extends BaseViewModel {
       debugPrint(e.toString());
       error = true;
       errorMessage = "Oops, something went wrong";
-
     } finally {
       changeStatus();
     }

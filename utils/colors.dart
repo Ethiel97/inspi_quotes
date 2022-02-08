@@ -27,7 +27,7 @@ var darkColor = Color(0xff140F2D);
 var screenBackgroundColor = const Color(0xff060606);
 var whiteBackgroundColor = Colors.white;
 
-var accentColor = Color(0xff703539);
+var accentColor = Color(0xffE2282A);
 
 List<Color> colors = [
   Color.fromRGBO(241, 122, 59, 0.91),

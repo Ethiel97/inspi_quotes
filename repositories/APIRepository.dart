@@ -13,7 +13,9 @@ class APIRepository implements IRrepository {
     ApiInterceptor(),
   ]);
 
-  APIRepository({required String apiUrl});
+  final String apiUrl;
+
+  APIRepository({required this.apiUrl});
 
   @override
   Future<List<Author>> getAuthors(
@@ -24,7 +26,7 @@ class APIRepository implements IRrepository {
       url += "$key=$value&";
     });
 
-    final response = await client.get(Uri.parse(url));
+    final response = await client.get(Uri.parse(apiUrl + url));
 
     var data = jsonDecode(response.body);
     return List<Author>.from(data.map((x) => Author.fromJson(x)));
@@ -40,7 +42,7 @@ class APIRepository implements IRrepository {
       url += "$key=$value&";
     });
 
-    final response = await client.get(Uri.parse(url));
+    final response = await client.get(Uri.parse(apiUrl + url));
 
     var data = jsonDecode(response.body);
     return List<Quote>.from(data.map((x) => Quote.fromJson(x)));
@@ -50,7 +52,7 @@ class APIRepository implements IRrepository {
   Future<List<Quote>> getQuotesForAutor(String authorId) async {
     String url = 'quotes?$authorId';
 
-    final response = await client.get(Uri.parse(url));
+    final response = await client.get(Uri.parse(apiUrl + url));
 
     var data = jsonDecode(response.body);
     return List<Quote>.from(data.map((x) => Quote.fromJson(x)));
@@ -59,7 +61,7 @@ class APIRepository implements IRrepository {
   @override
   Future<Quote> getSingleQuote(String quoteId) async {
     String url = "quotes/$quoteId";
-    final response = await client.get(Uri.parse(url));
+    final response = await client.get(Uri.parse(apiUrl + url));
 
     return Quote.fromJson(jsonDecode(response.body));
   }
@@ -72,7 +74,7 @@ class APIRepository implements IRrepository {
       url += "$key=$value&";
     });
 
-    final response = await client.get(Uri.parse(url));
+    final response = await client.get(Uri.parse(apiUrl + url));
 
     return Quote.fromJson(jsonDecode(response.body));
   }
@@ -81,7 +83,7 @@ class APIRepository implements IRrepository {
   Future<Author> getSingleAuthor(String authorId) async {
     String url = "authors/$authorId";
 
-    final response = await client.get(Uri.parse(url));
+    final response = await client.get(Uri.parse(apiUrl + url));
 
     return Author.fromJson(jsonDecode(response.body));
   }
