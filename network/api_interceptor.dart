@@ -10,7 +10,7 @@ class ApiInterceptor implements InterceptorContract {
   @override
   Future<RequestData> interceptRequest({required RequestData data}) async {
     data.headers[HttpHeaders.acceptHeader] = 'application/json';
-    data.headers[HttpHeaders.contentTypeHeader] = 'application/json';
+    // data.headers[HttpHeaders.contentTypeHeader] = 'application/json';
     return data;
   }
 

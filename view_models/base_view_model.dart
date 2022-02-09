@@ -1,16 +1,19 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:smart_quotes/repositories/APIRepository.dart';
+import 'package:smart_quotes/repositories/api_repository.dart';
 import 'package:smart_quotes/utils/constants.dart';
 
-abstract class BaseViewModel extends ChangeNotifier {
+abstract class BaseViewModel with ChangeNotifier {
   bool _isLoading = false;
   bool _isDisposed = false;
   bool _isInitializeDone = false;
   bool _hasError = false;
 
-  String errorMessage="";
+  String errorMessage = "";
+
+  final String? defaultLocale =
+      WidgetsBinding.instance?.window.locale.languageCode ?? "en";
 
   FutureOr<void> _initState;
 

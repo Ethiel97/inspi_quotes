@@ -19,7 +19,7 @@ class Quote {
 
   final String dateAdded;
 
-  final String content;
+   String content;
 
   Quote({
     required this.id,
@@ -32,6 +32,26 @@ class Quote {
   });
 
   factory Quote.fromJson(Map<String, dynamic> json) => _$QuoteFromJson(json);
+
+  Quote copyWith({
+    String? id,
+    String? author,
+    String? authorSlug,
+    int? length,
+    String? content,
+    List<String>? tags,
+    String? dateAdded,
+  }) {
+    return Quote(
+      author: author ?? this.author,
+      authorSlug: authorSlug ?? this.authorSlug,
+      id: id ?? this.id,
+      length: length ?? this.length,
+      content: content ?? this.content,
+      dateAdded: dateAdded ?? this.dateAdded,
+      tags: tags ?? this.tags,
+    );
+  }
 
   Map<String, dynamic> toJson() => _$QuoteToJson(this);
 }

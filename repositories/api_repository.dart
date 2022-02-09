@@ -1,11 +1,14 @@
 import 'dart:convert';
 
+import 'package:dio/dio.dart';
 import 'package:http/http.dart';
 import 'package:http_interceptor/http/intercepted_client.dart';
 import 'package:smart_quotes/models/author.dart';
 import 'package:smart_quotes/models/quote.dart';
 import 'package:smart_quotes/network/api_interceptor.dart';
-import 'package:smart_quotes/repositories/IRepository.dart';
+import 'package:smart_quotes/repositories/i_repository.dart';
+import 'package:smart_quotes/utils/constants.dart';
+import 'package:translator/translator.dart';
 
 ///
 class APIRepository implements IRrepository {
@@ -86,5 +89,19 @@ class APIRepository implements IRrepository {
     final response = await client.get(Uri.parse(apiUrl + url));
 
     return Author.fromJson(jsonDecode(response.body));
+  }
+
+  Future<String> translateToAppLocale({
+    required String text,
+    String source = "en",
+    required String target,
+  }) async {
+    final translator = GoogleTranslator();
+
+    var result = await translator.translate(text, from: source, to: target);
+
+    print(result.text);
+
+    return result.text;
   }
 }

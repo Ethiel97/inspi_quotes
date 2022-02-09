@@ -95,7 +95,7 @@ class _MainScreenState extends State<MainScreen> {
                       shape: BoxShape.rectangle,
                     ),
                     child: Text(
-                      "S.",
+                      "I.",
                       style: textStyle.apply(
                         color: Colors.white,
                         fontSizeDelta: 3,

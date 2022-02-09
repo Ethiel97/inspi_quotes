@@ -12,13 +12,16 @@ var textStyle = GoogleFonts.workSans(
   fontSize: 17,
   fontWeight: FontWeight.normal,
   color: darkColor,
+  decoration: TextDecoration.none,
 );
 
 var secondaryTextStyle = GoogleFonts.epilogue(
   fontSize: 14,
   fontWeight: FontWeight.normal,
+  decoration: TextDecoration.none,
 );
 
 var textStyleLight = textStyle.apply(
-  fontWeightDelta: -2,
+  fontWeightDelta: -3,
+  decoration: TextDecoration.none,
 );

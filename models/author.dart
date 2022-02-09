@@ -29,10 +29,27 @@ class Author {
     required this.quoteCount,
   });
 
-  factory Author.fromJson(Map<String, dynamic> json) =>
-      _$AuthorFromJson(json);
+  Author copyWith({
+    String? id,
+    String? bio,
+    String? description,
+    String? name,
+    String? link,
+    String? slug,
+    String? quoteCount,
+  }) {
+    return Author(
+      id: id ?? this.id,
+      bio: bio ?? this.bio,
+      description: description ?? this.description,
+      link: link ?? this.link,
+      name: name ?? this.name,
+      slug: slug ?? this.slug,
+      quoteCount: quoteCount ?? this.quoteCount,
+    );
+  }
+
+  factory Author.fromJson(Map<String, dynamic> json) => _$AuthorFromJson(json);
 
   Map<String, dynamic> toJson() => _$AuthorToJson(this);
-
-
 }
