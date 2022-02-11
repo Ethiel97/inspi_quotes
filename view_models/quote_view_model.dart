@@ -1,11 +1,13 @@
 import 'dart:async';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:sizer/sizer.dart';
+import 'package:smart_quotes/main.dart';
 import 'package:smart_quotes/models/quote.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:smart_quotes/models/tag.dart';
 import 'package:smart_quotes/utils/colors.dart';
 import 'package:smart_quotes/utils/text_styles.dart';
 import 'package:tinycolor2/tinycolor2.dart';
@@ -15,23 +17,36 @@ import 'base_view_model.dart';
 class QuoteViewModel extends BaseViewModel {
   List<Quote> quotes = [];
 
+  List<Tag> tags = [];
+
   late Quote quote;
 
-  int get total => quotes.length;
+  @override
+  int get size => quotes.length;
 
   String translatedText = "";
+  late Box<Quote> boxQuotes;
 
   // translatedText
 
+  List<Quote> get savedQuotes => boxQuotes.values.toList();
+
   @override
   FutureOr<void> init() async {
-    await fetchAll();
+    boxQuotes = Hive.box(quotesBox);
+    await fetchAll(query: {'page': 30, 'limit': 30});
   }
+
+  fetchTags() {}
 
   fetchAll({Map<String, dynamic> query = const {}}) async {
     try {
       changeStatus();
       quotes = await apiRepository.getQuotes(query: query);
+      // tags = await apiRepository.getTags();
+
+      tags.shuffle();
+      quotes.shuffle();
       changeStatus();
     } catch (e) {
       print(e);
@@ -50,6 +65,7 @@ class QuoteViewModel extends BaseViewModel {
     try {
       changeStatus();
       quotes = await apiRepository.getQuotesForAutor(authorId);
+      quotes.shuffle();
       changeStatus();
     } catch (e) {
       debugPrint(e.toString());
@@ -100,7 +116,7 @@ class QuoteViewModel extends BaseViewModel {
       String translatedText = await apiRepository.translateToAppLocale(
         text: quote.content,
         source: "en",
-        target: "it",
+        target: defaultLocale ?? "en",
       );
 
       this.translatedText = translatedText;
@@ -119,10 +135,46 @@ class QuoteViewModel extends BaseViewModel {
     }
   }
 
+  void bookmark(Quote quote) {
+    if (!boxQuotes.containsKey(quote.id)) {
+      quote = quote.copyWith(saved: true);
+      boxQuotes.put(quote.id, quote);
+
+      Get.snackbar(
+        "Notification",
+        "Quoted added to your fav list",
+      );
+    }
+
+    print("BOOKMARING");
+    /*else {
+      unBookmark(quote);
+    }*/
+    reloadState();
+  }
+
+  void unBookmark(Quote quote) {
+    quote = quote.copyWith(saved: false);
+
+    boxQuotes.delete(quote.id);
+    reloadState();
+
+    Get.snackbar(
+      "Notification",
+      "Quoted remove from your fav list",
+      colorText: Colors.white,
+    );
+  }
+
   showTranslateModal(BuildContext context, String text) {
-    // showBottomSheet(context: context, builder: builder)/
     showModalBottomSheet(
-      backgroundColor: const Color(0xff171717).withOpacity(.8),
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(12),
+          topRight: Radius.circular(12),
+        ),
+      ),
+      backgroundColor: Theme.of(context).backgroundColor.lighten(15),
       context: context,
       builder: (context) => Container(
         alignment: Alignment.centerLeft,
@@ -131,10 +183,13 @@ class QuoteViewModel extends BaseViewModel {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            const SizedBox(
+              height: 12,
+            ),
             Text(
               "Result",
               style: textStyle.apply(
-                color: Colors.white,
+                color: Theme.of(context).textTheme.bodyText1?.color,
                 fontWeightDelta: 5,
                 fontSizeDelta: 1,
               ),
@@ -146,7 +201,7 @@ class QuoteViewModel extends BaseViewModel {
             Text(
               text,
               style: textStyle.apply(
-                color: Colors.white,
+                color: Theme.of(context).textTheme.bodyText1?.color,
                 fontSizeDelta: 1,
               ),
             ),
@@ -155,21 +210,11 @@ class QuoteViewModel extends BaseViewModel {
         height: 24.h,
         width: 100.w,
         decoration: BoxDecoration(
-          color: const Color(0xff171717).withOpacity(.8),
-          borderRadius: BorderRadius.circular(
-            20,
+          color: Theme.of(context).backgroundColor,
+          borderRadius: const BorderRadius.only(
+            topLeft: Radius.circular(12),
+            topRight: Radius.circular(12),
           ),
-          border: Border.all(
-            color: Colors.white.withOpacity(.092),
-            width: .8,
-          ),
-          boxShadow: [
-            BoxShadow(
-              offset: const Offset(0, 4),
-              blurRadius: 8,
-              color: TinyColor(darkColor).color.withOpacity(.02),
-            )
-          ],
         ),
       ),
     );

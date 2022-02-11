@@ -34,7 +34,7 @@ extension StringExtensions on String {
 
   bool get isValidJWT {
     final jwtRegExp =
-        RegExp("^[A-Za-z0-9-_=]+\.[A-Za-z0-9-_=]+\.?[A-Za-z0-9-_.+/=]*\$");
+        RegExp("^[A-Za-z0-9-_=]+.[A-Za-z0-9-_=]+.?[A-Za-z0-9-_.+/=]*\$");
     return jwtRegExp.hasMatch(this);
   }
 

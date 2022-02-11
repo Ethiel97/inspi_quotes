@@ -1,5 +1,6 @@
 import 'package:smart_quotes/models/author.dart';
 import 'package:smart_quotes/models/quote.dart';
+import 'package:smart_quotes/models/tag.dart';
 
 abstract class IRrepository {
   Future<List<Quote>> getQuotes({Map<String, dynamic> query = const {}});
@@ -11,6 +12,8 @@ abstract class IRrepository {
   Future<Author> getSingleAuthor(String authorId);
 
   Future<List<Quote>> getQuotesForAutor(String authorId);
+
+  Future<List<Tag>> getTags();
 
   Future<Quote> getRandomQuote({Map<String, dynamic> query = const {}});
 }

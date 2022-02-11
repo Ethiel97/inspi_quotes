@@ -3,6 +3,8 @@ import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 import 'package:smart_quotes/providers/navigation_provider.dart';
+import 'package:smart_quotes/providers/theme_provider.dart';
+import 'package:smart_quotes/screens/favorite_quotes_screen.dart';
 import 'package:smart_quotes/screens/home_screen.dart';
 import 'package:smart_quotes/screens/quotes_screen.dart';
 import 'package:smart_quotes/utils/colors.dart';
@@ -17,11 +19,12 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   late NavigationProvider _navigationProvider;
+  late ThemeProvider _themeProvider;
 
   List<Widget> screens = [
     const QuotesScreen(key: ValueKey("quotes")),
     const HomeScreen(key: ValueKey("home")),
-    const HomeScreen(key: ValueKey("home")),
+    const FavoriteQuotesScreen(key: ValueKey("fav_quotes")),
   ];
 
   List<BottomNavigationBarItem> navigationBarItems = [
@@ -57,6 +60,7 @@ class _MainScreenState extends State<MainScreen> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     _navigationProvider = Provider.of<NavigationProvider>(context);
+    _themeProvider = Provider.of<ThemeProvider>(context);
   }
 
   void _onItemTapped(int index) {
@@ -65,7 +69,8 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-        backgroundColor: screenBackgroundColor,
+        // backgroundColor: screenBackgroundColor,
+        backgroundColor: Theme.of(context).backgroundColor,
         extendBodyBehindAppBar: true,
         extendBody: true,
         appBar: PreferredSize(
@@ -81,18 +86,20 @@ class _MainScreenState extends State<MainScreen> {
             Padding(
               padding: const EdgeInsets.only(
                 left: 24.0,
+                right: 24,
                 top: 10.0,
               ),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Container(
-                    height: 10.w,
-                    width: 10.w,
+                    height: 9.w,
+                    width: 9.w,
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
                       color: accentColor,
                       shape: BoxShape.rectangle,
+                      borderRadius: BorderRadius.circular(12),
                     ),
                     child: Text(
                       "I.",
@@ -103,6 +110,16 @@ class _MainScreenState extends State<MainScreen> {
                       ),
                     ),
                   ),
+                  IconButton(
+                    onPressed: () => _themeProvider.toggleMode(),
+                    icon: Icon(
+                      _themeProvider.currentTheme == 'dark'
+                          ? Icons.light_mode
+                          : Icons.dark_mode,
+                      size: 9.w,
+                    ),
+                    color: Theme.of(context).iconTheme.color,
+                  )
                 ],
               ),
             ),
@@ -117,16 +134,17 @@ class _MainScreenState extends State<MainScreen> {
           ],
         ),
         bottomNavigationBar: BottomNavigationBar(
+          elevation: 0.0,
           type: BottomNavigationBarType.fixed,
-          backgroundColor: screenBackgroundColor,
+          backgroundColor: Theme.of(context).backgroundColor,
           showSelectedLabels: false,
           showUnselectedLabels: false,
           enableFeedback: true,
           iconSize: 24,
           items: navigationBarItems,
           currentIndex: _navigationProvider.currentIndex,
-          selectedItemColor: accentColor,
-          unselectedItemColor: Colors.white,
+          selectedItemColor: Theme.of(context).colorScheme.secondary,
+          unselectedItemColor: Theme.of(context).unselectedWidgetColor,
           onTap: _onItemTapped,
         ),
       );

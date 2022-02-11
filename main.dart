@@ -1,17 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/route_manager.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 import 'package:smart_quotes/providers/navigation_provider.dart';
-import 'package:smart_quotes/utils/text_styles.dart';
-
+import 'package:smart_quotes/providers/theme_provider.dart';
+import 'models/author.dart';
+import 'models/quote.dart';
+import 'models/tag.dart';
 import 'providers/connectivity_service.dart';
 import 'screens/splash_screen.dart';
 import 'utils/app_router.dart';
 
+var quotesBox = 'quotes';
+var authorsBox = 'authors';
+var tagsBox = 'tags';
+
+void initHiveBox() async {
+  await Hive.initFlutter();
+  Hive.registerAdapter(QuoteAdapter());
+  Hive.registerAdapter(TagAdapter());
+  Hive.registerAdapter(AuthorAdapter());
+  await Hive.openBox<Quote>(quotesBox);
+  await Hive.openBox<Author>(authorsBox);
+  await Hive.openBox<Tag>(tagsBox);
+}
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  initHiveBox();
   await dotenv.load(fileName: '.env');
 
   runApp(
@@ -19,6 +37,9 @@ void main() async {
       providers: [
         ChangeNotifierProvider<NavigationProvider>(
           create: (_) => NavigationProvider(),
+        ),
+        ChangeNotifierProvider<ThemeProvider>(
+          create: (_) => ThemeProvider(),
         ),
         StreamProvider<ConnectivityStatus>(
           create: (context) =>
@@ -52,19 +73,18 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     ConnectivityService().notify(connectivityStatus);
 
-    return Sizer(builder: (context, orientation, deviceType) {
-      return GetMaterialApp(
-        title: 'Inspi Quotes',
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          fontFamily: textStyle.fontFamily,
-          visualDensity: VisualDensity.adaptivePlatformDensity,
+    return Consumer<ThemeProvider>(
+      builder: (context, themeProvider, _) => Sizer(
+        builder: (context, orientation, deviceType) => GetMaterialApp(
+          title: 'Inspi Quotes',
+          debugShowCheckedModeBanner: false,
+          theme: themeProvider.theme,
+          routes: appRoutes,
+          home: const SplashScreen(
+            key: ValueKey("spash"),
+          ),
         ),
-        routes: appRoutes,
-        home: const SplashScreen(
-          key: ValueKey("spash"),
-        ),
-      );
-    });
+      ),
+    );
   }
 }

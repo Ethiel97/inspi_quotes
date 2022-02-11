@@ -1,25 +1,35 @@
+import 'package:hive/hive.dart';
 import 'package:json_annotation/json_annotation.dart';
-
-import 'tag.dart';
 
 part 'quote.g.dart';
 
+@HiveType(typeId: 0)
 @JsonSerializable()
-class Quote {
+class Quote extends HiveObject {
+  @HiveField(0)
   @JsonKey(name: "_id")
   final String id;
 
+  @HiveField(1)
   final String author;
 
+  @HiveField(2)
   final String authorSlug;
 
+  @HiveField(3)
   final int length;
 
+  @HiveField(4)
   final List<String> tags;
 
+  @HiveField(5)
   final String dateAdded;
 
-   String content;
+  @HiveField(6)
+  final String content;
+
+  @HiveField(7)
+  final bool saved;
 
   Quote({
     required this.id,
@@ -29,6 +39,7 @@ class Quote {
     required this.content,
     required this.tags,
     required this.dateAdded,
+    this.saved = false,
   });
 
   factory Quote.fromJson(Map<String, dynamic> json) => _$QuoteFromJson(json);
@@ -41,17 +52,18 @@ class Quote {
     String? content,
     List<String>? tags,
     String? dateAdded,
-  }) {
-    return Quote(
-      author: author ?? this.author,
-      authorSlug: authorSlug ?? this.authorSlug,
-      id: id ?? this.id,
-      length: length ?? this.length,
-      content: content ?? this.content,
-      dateAdded: dateAdded ?? this.dateAdded,
-      tags: tags ?? this.tags,
-    );
-  }
+    bool? saved = false,
+  }) =>
+      Quote(
+        author: author ?? this.author,
+        authorSlug: authorSlug ?? this.authorSlug,
+        id: id ?? this.id,
+        length: length ?? this.length,
+        content: content ?? this.content,
+        dateAdded: dateAdded ?? this.dateAdded,
+        tags: tags ?? this.tags,
+        saved: saved ?? this.saved,
+      );
 
   Map<String, dynamic> toJson() => _$QuoteToJson(this);
 }

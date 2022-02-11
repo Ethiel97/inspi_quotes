@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:get/route_manager.dart';
 import 'package:sizer/sizer.dart';
 import 'package:smart_quotes/utils/app_router.dart';
@@ -119,7 +118,7 @@ class _SplashScreenState extends State<SplashScreen>
                                 alignment: Alignment.center,
                                 decoration: BoxDecoration(
                                   color: accentColor,
-                                  shape: BoxShape.rectangle,
+                                  borderRadius: BorderRadius.circular(12),
                                 ),
                                 child: Text(
                                   "I.",

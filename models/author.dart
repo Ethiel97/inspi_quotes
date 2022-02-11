@@ -1,22 +1,31 @@
+import 'package:hive/hive.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'author.g.dart';
 
+@HiveType(typeId: 1)
 @JsonSerializable()
-class Author {
+class Author extends HiveObject{
+  @HiveField(0)
   @JsonKey(name: "_id")
   final String id;
 
+  @HiveField(1)
   final String bio;
 
+  @HiveField(2)
   final String description;
 
+  @HiveField(3)
   final String link;
 
+  @HiveField(4)
   final String name;
 
+  @HiveField(5)
   final String slug;
 
+  @HiveField(6)
   final String quoteCount;
 
   Author({

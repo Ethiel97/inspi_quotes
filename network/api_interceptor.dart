@@ -10,31 +10,48 @@ class ApiInterceptor implements InterceptorContract {
   @override
   Future<RequestData> interceptRequest({required RequestData data}) async {
     data.headers[HttpHeaders.acceptHeader] = 'application/json';
-    // data.headers[HttpHeaders.contentTypeHeader] = 'application/json';
+    data.headers[HttpHeaders.contentTypeHeader] = 'application/json';
     return data;
   }
 
   @override
   Future<ResponseData> interceptResponse({required ResponseData data}) async {
-    Map<String, dynamic> parsedData = jsonDecode(data.body!);
+    // bool isResourceList =
+
+    var parsedData = jsonDecode(data.body!);
+
+    if (parsedData.runtimeType.toString() == 'List<dynamic>') {
+      return ResponseData(
+        data.bodyBytes,
+        data.statusCode,
+        isRedirect: data.isRedirect,
+        headers: data.headers,
+        request: data.request,
+        persistentConnection: data.persistentConnection,
+        contentLength: data.contentLength,
+        body: jsonEncode(parsedData),
+      );
+    }
 
     bool isResourceList = parsedData.containsKey('results');
 
     var responseData = isResourceList ? parsedData['results'] : parsedData;
 
-    var dataBytes = Uint8List.fromList(jsonEncode(responseData).codeUnits);
+    responseData = jsonEncode(responseData);
+    var dataBytes = Uint8List.fromList(responseData.codeUnits);
+
+    print(parsedData.runtimeType.toString());
+
 
     return ResponseData(
-      dataBytes,
+      data.bodyBytes,
       data.statusCode,
       isRedirect: data.isRedirect,
       headers: data.headers,
       request: data.request,
       persistentConnection: data.persistentConnection,
       contentLength: data.contentLength,
-      body: isResourceList
-          ? jsonEncode(parsedData['results'])
-          : jsonEncode(parsedData),
+      body: responseData
     );
   }
 }

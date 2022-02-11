@@ -19,6 +19,10 @@ abstract class BaseViewModel with ChangeNotifier {
 
   final APIRepository apiRepository = APIRepository(apiUrl: apiUrl);
 
+  int get size => 0;
+
+  int get favSize => 0;
+
   BaseViewModel() {
     _init();
   }

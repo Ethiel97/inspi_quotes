@@ -1,13 +1,12 @@
 import 'dart:convert';
 
-import 'package:dio/dio.dart';
 import 'package:http/http.dart';
 import 'package:http_interceptor/http/intercepted_client.dart';
 import 'package:smart_quotes/models/author.dart';
 import 'package:smart_quotes/models/quote.dart';
+import 'package:smart_quotes/models/tag.dart';
 import 'package:smart_quotes/network/api_interceptor.dart';
 import 'package:smart_quotes/repositories/i_repository.dart';
-import 'package:smart_quotes/utils/constants.dart';
 import 'package:translator/translator.dart';
 
 ///
@@ -23,32 +22,67 @@ class APIRepository implements IRrepository {
   @override
   Future<List<Author>> getAuthors(
       {Map<String, dynamic> query = const {}}) async {
-    String url = 'authors';
+    String url = 'authors?';
+
+    String lastKey = "";
+    // query.
+    query.forEach((key, value) {
+      lastKey = key;
+    });
 
     query.forEach((key, value) {
-      url += "$key=$value&";
+      url += "$key=$value${lastKey == key ? '' : '&'}";
     });
 
     final response = await client.get(Uri.parse(apiUrl + url));
 
     var data = jsonDecode(response.body);
-    return List<Author>.from(data.map((x) => Author.fromJson(x)));
+    return List<Author>.from(data['results'].map((x) => Author.fromJson(x)));
   }
 
   @override
   Future<List<Quote>> getQuotes({
     Map<String, dynamic> query = const {},
   }) async {
-    String url = 'quotes';
+    String url = 'quotes?';
+    String lastKey = "";
+    // query.
+    query.forEach((key, value) {
+      lastKey = key;
+    });
 
     query.forEach((key, value) {
-      url += "$key=$value&";
+      url += "$key=$value${lastKey == key ? '' : '&'}";
     });
 
     final response = await client.get(Uri.parse(apiUrl + url));
 
     var data = jsonDecode(response.body);
-    return List<Quote>.from(data.map((x) => Quote.fromJson(x)));
+    print(data);
+
+    return List<Quote>.from(data['results'].map((x) => Quote.fromJson(x)));
+  }
+
+  @override
+  Future<List<Tag>> getTags({
+    Map<String, dynamic> query = const {},
+  }) async {
+    String url = 'tags?';
+
+    String lastKey = "";
+    // query.
+    query.forEach((key, value) {
+      lastKey = key;
+    });
+
+    query.forEach((key, value) {
+      url += "$key=$value${lastKey == key ? '' : '&'}";
+    });
+
+    final response = await client.get(Uri.parse(apiUrl + url));
+
+    var data = jsonDecode(response.body);
+    return List<Tag>.from(data.map((x) => Tag.fromJson(x)));
   }
 
   @override
@@ -58,7 +92,7 @@ class APIRepository implements IRrepository {
     final response = await client.get(Uri.parse(apiUrl + url));
 
     var data = jsonDecode(response.body);
-    return List<Quote>.from(data.map((x) => Quote.fromJson(x)));
+    return List<Quote>.from(data['results'].map((x) => Quote.fromJson(x)));
   }
 
   @override
@@ -72,6 +106,15 @@ class APIRepository implements IRrepository {
   @override
   Future<Quote> getRandomQuote({Map<String, dynamic> query = const {}}) async {
     String url = 'random?';
+    String lastKey = "";
+    // query.
+    query.forEach((key, value) {
+      lastKey = key;
+    });
+
+    query.forEach((key, value) {
+      url += "$key=$value${lastKey == key ? '' : '&'}";
+    });
 
     query.forEach((key, value) {
       url += "$key=$value&";

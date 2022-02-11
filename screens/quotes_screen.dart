@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
-import 'package:flutter_tinder_swipe/flutter_tinder_swipe.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:sizer/sizer.dart';
 import 'package:smart_quotes/utils/colors.dart';
@@ -21,15 +20,13 @@ class QuotesScreen extends StatefulWidget {
 
 class _QuotesScreenState extends State<QuotesScreen> {
   final TCardController _controller = TCardController();
-  CardController controller = CardController();
 
   @override
-  Widget build(BuildContext context) {
-    return BaseView<QuoteViewModel>(
+  Widget build(BuildContext context) => BaseView<QuoteViewModel>(
         key: UniqueKey(),
         vmBuilder: (context) => QuoteViewModel(),
-        builder: _buildScreen);
-  }
+        builder: _buildScreen,
+      );
 
   Widget _buildScreen(BuildContext context, QuoteViewModel quoteViewModel) =>
       SingleChildScrollView(
@@ -44,9 +41,13 @@ class _QuotesScreenState extends State<QuotesScreen> {
                   Text(
                     Jiffy().yMMMEd.toString(),
                     style: textStyle.apply(
-                      color: Colors.white.withOpacity(
-                        .5,
-                      ),
+                      color: Theme.of(context)
+                          .textTheme
+                          .bodyText1
+                          ?.color
+                          ?.withOpacity(
+                            .5,
+                          ),
                       fontSizeDelta: -4,
                     ),
                   ),
@@ -56,7 +57,7 @@ class _QuotesScreenState extends State<QuotesScreen> {
                   Text(
                     quotesScreenSubtitle,
                     style: textStyle.apply(
-                      color: Colors.white,
+                      color: Theme.of(context).textTheme.bodyText1?.color,
                       fontWeightDelta: 5,
                       fontSizeDelta: 8,
                     ),
@@ -85,31 +86,36 @@ class _QuotesScreenState extends State<QuotesScreen> {
               ),
             ),*/
 
-            TCard(
-              size: Size(
-                100.w,
-                60.h,
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 6,
               ),
-              controller: _controller,
-              cards: quoteViewModel.quotes
-                  .map(
-                    (quote) => WQuoteCard(
-                      key: UniqueKey(),
-                      quote: quote,
-                      viewModel: quoteViewModel,
-                      onTranslate: () => {},
-                    ),
-                  )
-                  .toList(),
-              onForward: (index, info) {
-                print(index);
-              },
-              onBack: (index, info) {
-                print(index);
-              },
-              onEnd: () {
-                print('end');
-              },
+              child: TCard(
+                size: Size(
+                  100.w,
+                  58.h,
+                ),
+                controller: _controller,
+                cards: quoteViewModel.quotes
+                    .map(
+                      (quote) => WQuoteCard(
+                        key: UniqueKey(),
+                        quote: quote,
+                        viewModel: quoteViewModel,
+                        onTranslate: () => {},
+                      ),
+                    )
+                    .toList(),
+                onForward: (index, info) {
+                  print(index);
+                },
+                onBack: (index, info) {
+                  print(index);
+                },
+                onEnd: () {
+                  print('end');
+                },
+              ),
             ),
           ],
         ),
