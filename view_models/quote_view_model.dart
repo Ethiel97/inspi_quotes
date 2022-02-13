@@ -8,7 +8,6 @@ import 'package:smart_quotes/main.dart';
 import 'package:smart_quotes/models/quote.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:smart_quotes/models/tag.dart';
-import 'package:smart_quotes/utils/colors.dart';
 import 'package:smart_quotes/utils/text_styles.dart';
 import 'package:tinycolor2/tinycolor2.dart';
 
@@ -17,7 +16,11 @@ import 'base_view_model.dart';
 class QuoteViewModel extends BaseViewModel {
   List<Quote> quotes = [];
 
+  List<Quote> filteredQuotes = [];
+
   List<Tag> tags = [];
+
+  List<Tag> selectedTags = [];
 
   late Quote quote;
 
@@ -34,30 +37,83 @@ class QuoteViewModel extends BaseViewModel {
   @override
   FutureOr<void> init() async {
     boxQuotes = Hive.box(quotesBox);
+    await fetchTags();
     await fetchAll(query: {'page': 30, 'limit': 30});
   }
 
-  fetchTags() {}
+  fetchTags() async {
+    tags = await apiRepository.getTags();
+    tags.shuffle();
+    // selectedTags = [tags[0]];
+    filterQuotesByTag();
+    reloadState();
+  }
+
+  selectTag(Tag tag) async {
+    if (selectedTags.where((el) => el.name == tag.name).isEmpty) {
+      selectedTags.add(tag);
+      reloadState();
+      // notifyListeners();
+    } else {
+      selectedTags.remove(tag);
+      reloadState();
+      // notifyListeners();
+    }
+    // reloadState();
+    await filterQuotesByTag();
+  }
+
+  filterQuotes(String query) async {
+    if (query.isNotEmpty) {
+      debouncing(fn: () {
+        // filteredQuotes.clear();
+        changeStatus();
+        filteredQuotes = quotes
+            .where((element) =>
+                element.content.toLowerCase().contains(query.toLowerCase()))
+            .toList();
+        changeStatus();
+        // reloadState();
+      });
+    }
+  }
+
+  filterQuotesByTag() async {
+    try {
+      changeStatus();
+      String tags = selectedTags.map((e) => e.name).toList().join("|");
+
+      print("SELECTED TAGS $tags");
+
+      // filteredQuotes.clear();
+      filteredQuotes = (await apiRepository.getQuotesForTag(tags));
+      filteredQuotes.shuffle();
+      changeStatus();
+    } catch (e) {
+      print(e);
+    } finally {
+      finishLoading();
+    }
+  }
 
   fetchAll({Map<String, dynamic> query = const {}}) async {
     try {
       changeStatus();
       quotes = await apiRepository.getQuotes(query: query);
-      // tags = await apiRepository.getTags();
 
-      tags.shuffle();
       quotes.shuffle();
-      changeStatus();
     } catch (e) {
       print(e);
       debugPrint(e.toString());
 
       quotes = [];
+      tags = [];
       error = true;
 
       errorMessage = "Oops, something went wrong";
     } finally {
       changeStatus();
+      finishLoading();
     }
   }
 
@@ -66,7 +122,6 @@ class QuoteViewModel extends BaseViewModel {
       changeStatus();
       quotes = await apiRepository.getQuotesForAutor(authorId);
       quotes.shuffle();
-      changeStatus();
     } catch (e) {
       debugPrint(e.toString());
 
@@ -76,6 +131,7 @@ class QuoteViewModel extends BaseViewModel {
       errorMessage = "Oops, something went wrong";
     } finally {
       changeStatus();
+      finishLoading();
     }
   }
 
@@ -90,6 +146,7 @@ class QuoteViewModel extends BaseViewModel {
       errorMessage = "Oops, something went wrong";
     } finally {
       changeStatus();
+      finishLoading();
     }
   }
 
@@ -104,6 +161,7 @@ class QuoteViewModel extends BaseViewModel {
       errorMessage = "Oops, something went wrong";
     } finally {
       changeStatus();
+      finishLoading();
     }
   }
 
@@ -132,6 +190,8 @@ class QuoteViewModel extends BaseViewModel {
     } catch (e) {
       errorMessage = "Oops, something went wrong";
       print(e);
+    } finally {
+      finishLoading();
     }
   }
 
@@ -144,6 +204,8 @@ class QuoteViewModel extends BaseViewModel {
         "Notification",
         "Quoted added to your fav list",
       );
+    }else {
+      unBookmark(quote);
     }
 
     print("BOOKMARING");

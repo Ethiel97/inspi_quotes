@@ -10,6 +10,8 @@ abstract class BaseViewModel with ChangeNotifier {
   bool _isInitializeDone = false;
   bool _hasError = false;
 
+  Timer? _debounceTimer;
+
   String errorMessage = "";
 
   final String? defaultLocale =
@@ -74,5 +76,21 @@ abstract class BaseViewModel with ChangeNotifier {
     scheduleMicrotask(() {
       if (!_isDisposed) notifyListeners();
     });
+  }
+
+  finishLoading() {
+    _isLoading = false;
+    scheduleMicrotask(() {
+      if (!_isDisposed) notifyListeners();
+    });
+  }
+
+  void debouncing({required Function() fn, int waitForMs = 500}) {
+    // if this function is called before 500ms [waitForMs] expired
+    //cancel the previous call
+    _debounceTimer?.cancel();
+
+    /// set a 500ms [waitForMs] timer for the [fn] to be called
+    _debounceTimer = Timer(Duration(milliseconds: waitForMs), fn);
   }
 }

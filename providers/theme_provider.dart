@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:smart_quotes/utils/colors.dart';
 import 'package:smart_quotes/utils/local_storage.dart';
 import 'package:smart_quotes/utils/text_styles.dart';
@@ -6,7 +8,7 @@ import 'package:tinycolor2/tinycolor2.dart';
 
 class ThemeProvider with ChangeNotifier {
   final String _themeMode = 'THEME_MODE';
-  String? _currentTheme;
+  String _currentTheme = 'dark';
   ThemeData? _themeData;
 
   final ThemeData _darkTheme = ThemeData(
@@ -35,7 +37,7 @@ class ThemeProvider with ChangeNotifier {
   final ThemeData _lightTheme = ThemeData(
     brightness: Brightness.light,
     fontFamily: textStyle.fontFamily,
-    backgroundColor: whiteBackgroundColor.darken(2),
+    backgroundColor: whiteBackgroundColor.darken(4),
     scaffoldBackgroundColor: whiteBackgroundColor,
     primarySwatch: Colors.grey,
     visualDensity: VisualDensity.adaptivePlatformDensity,
@@ -58,11 +60,10 @@ class ThemeProvider with ChangeNotifier {
 
   ThemeData? get theme => _themeData;
 
-  String? get currentTheme => _currentTheme;
+  String get currentTheme => _currentTheme;
 
   ThemeProvider() {
     LocalStorage.getData(_themeMode).then((value) {
-      print("VALUE $value");
       switch (value?.toString() ?? 'dark') {
         case 'light':
           _themeData = _lightTheme;
@@ -90,12 +91,21 @@ class ThemeProvider with ChangeNotifier {
     } else {
       setDarkMode();
     }
+
+    SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle(
+        statusBarColor: currentTheme == 'dark'
+            ? screenBackgroundColor
+            : Colors.white.darken(4),
+      ),
+    );
   }
 
   void setLightMode() {
     _themeData = _lightTheme;
     _currentTheme = 'light';
     LocalStorage.saveData(_themeMode, _currentTheme);
+
     notifyListeners();
   }
 }

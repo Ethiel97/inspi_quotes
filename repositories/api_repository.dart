@@ -20,8 +20,9 @@ class APIRepository implements IRrepository {
   APIRepository({required this.apiUrl});
 
   @override
-  Future<List<Author>> getAuthors(
-      {Map<String, dynamic> query = const {}}) async {
+  Future<List<Author>> getAuthors({
+    Map<String, dynamic> query = const {},
+  }) async {
     String url = 'authors?';
 
     String lastKey = "";
@@ -58,7 +59,7 @@ class APIRepository implements IRrepository {
     final response = await client.get(Uri.parse(apiUrl + url));
 
     var data = jsonDecode(response.body);
-    print(data);
+    // print(data);
 
     return List<Quote>.from(data['results'].map((x) => Quote.fromJson(x)));
   }
@@ -104,7 +105,9 @@ class APIRepository implements IRrepository {
   }
 
   @override
-  Future<Quote> getRandomQuote({Map<String, dynamic> query = const {}}) async {
+  Future<Quote> getRandomQuote({
+    Map<String, dynamic> query = const {},
+  }) async {
     String url = 'random?';
     String lastKey = "";
     // query.
@@ -138,13 +141,19 @@ class APIRepository implements IRrepository {
     required String text,
     String source = "en",
     required String target,
-  }) async {
-    final translator = GoogleTranslator();
+  }) async =>
+      (await GoogleTranslator().translate(text, from: source, to: target)).text;
 
-    var result = await translator.translate(text, from: source, to: target);
+  @override
+  Future<List<Quote>> getQuotesForTag(String? tags) async {
+    String? url = "quotes?";
 
-    print(result.text);
+    url = url + "tags=$tags";
 
-    return result.text;
+    final response = await client.get(Uri.parse(apiUrl + url));
+
+    var data = jsonDecode(response.body);
+
+    return List<Quote>.from(data['results'].map((x) => Quote.fromJson(x)));
   }
 }

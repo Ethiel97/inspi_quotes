@@ -56,6 +56,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           footerRadius: 18.0,
           indicatorType: IndicatorType.CIRCLE,
           slides: pages,
+          textColor: Colors.white,
           skipText: 'Passer',
           onDone: goToNextPage,
           onSkip: goToNextPage,

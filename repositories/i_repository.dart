@@ -15,5 +15,7 @@ abstract class IRrepository {
 
   Future<List<Tag>> getTags();
 
+  Future<List<Quote>> getQuotesForTag(String tags);
+
   Future<Quote> getRandomQuote({Map<String, dynamic> query = const {}});
 }

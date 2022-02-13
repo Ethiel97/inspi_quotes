@@ -124,7 +124,7 @@ class _SplashScreenState extends State<SplashScreen>
                                   "I.",
                                   style: textStyle.apply(
                                     color: Colors.white,
-                                    fontSizeDelta: 3,
+                                    fontSizeDelta: 10,
                                     fontWeightDelta: 5,
                                   ),
                                 ),

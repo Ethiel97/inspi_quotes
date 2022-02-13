@@ -40,7 +40,7 @@ class ApiInterceptor implements InterceptorContract {
     responseData = jsonEncode(responseData);
     var dataBytes = Uint8List.fromList(responseData.codeUnits);
 
-    print(parsedData.runtimeType.toString());
+    // print(parsedData.runtimeType.toString());
 
 
     return ResponseData(

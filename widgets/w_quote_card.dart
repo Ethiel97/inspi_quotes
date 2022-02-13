@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:smart_quotes/models/quote.dart';
+import 'package:smart_quotes/providers/navigation_provider.dart';
 import 'package:smart_quotes/providers/theme_provider.dart';
 import 'package:smart_quotes/utils/colors.dart';
 import 'package:smart_quotes/utils/text_styles.dart';
@@ -22,8 +23,9 @@ class WQuoteCard extends StatelessWidget {
   final VoidCallback onTranslate;
 
   @override
-  Widget build(BuildContext context) => Consumer<ThemeProvider>(
-        builder: (context, themeProvider, _) => Container(
+  Widget build(BuildContext context) =>
+      Consumer2<ThemeProvider, NavigationProvider>(
+        builder: (context, themeProvider, navigationProvider, _) => Container(
           padding: const EdgeInsets.symmetric(
             vertical: 12,
             horizontal: 18,
@@ -61,8 +63,14 @@ class WQuoteCard extends StatelessWidget {
                 spacing: 8.0,
                 children: quote.tags
                     .map(
-                      (e) => InkWell(
-                        onTap: () {},
+                      (e) => GestureDetector(
+                        onTap: () {
+                          /*navigationProvider.currentIndex = 1;
+
+                          Tag tag =
+                          viewModel.tags.firstWhere((tag) => tag.name == e);
+                          viewModel.selectTag(tag);*/
+                        },
                         child: Text(
                           "#$e",
                           style: textStyle.apply(
@@ -88,9 +96,10 @@ class WQuoteCard extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   maxLines: 10,
                   style: textStyle.apply(
-                      fontSizeDelta: 14,
-                      fontWeightDelta: 10,
-                      color: Theme.of(context).textTheme.bodyText1?.color),
+                    fontSizeDelta: 14,
+                    fontWeightDelta: 10,
+                    color: Theme.of(context).textTheme.bodyText1?.color,
+                  ),
                 ),
               ),
               const SizedBox(
@@ -107,7 +116,7 @@ class WQuoteCard extends StatelessWidget {
                   fontSizeDelta: -2,
                 ),
               ),
-              const SizedBox(
+              /*const SizedBox(
                 height: 16,
               ),
               MaterialButton(
@@ -126,7 +135,7 @@ class WQuoteCard extends StatelessWidget {
                     fontSizeDelta: -2,
                   ),
                 ),
-              ),
+              ),*/
               // const Spacer(),
               const SizedBox(
                 height: 16,

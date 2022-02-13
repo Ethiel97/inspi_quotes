@@ -33,64 +33,73 @@ class _BaseViewState<T extends BaseViewModel> extends State<BaseView<T>> {
     T viewModel,
     Widget? child,
   ) =>
-      Consumer<ThemeProvider>(
-        builder: (context, themeProvider, _) => SizedBox(
-          height: 100.h,
-          child: !viewModel.isInitialized
-              ? Container(
-                  height: 100.h,
-                  color: Theme.of(context).backgroundColor,
-                  child: Center(
-                    child: CircularProgressIndicator(
-                      valueColor: AlwaysStoppedAnimation(
-                        Theme.of(context).colorScheme.secondary,
-                      ),
-                    ),
-                  ),
-                )
-              : Stack(
-                  children: [
-                    viewModel.hasError
-                        ? Center(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              // mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Image.asset(
-                                  "assets/img/404-${themeProvider.currentTheme}.png",
-                                  height: 40.h,
-                                  width: 100.w,
-                                  fit: BoxFit.contain,
-                                ),
-                                Text(
-                                  viewModel.errorMessage,
-                                  textAlign: TextAlign.center,
-                                  style: textStyle.apply(
-                                    color: Theme.of(context)
-                                        .textTheme
-                                        .bodyText1
-                                        ?.color,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          )
-                        : widget.builder(
-                            context,
-                            viewModel,
-                          ),
-                    Visibility(
-                      visible: viewModel.isLoading,
-                      child: Center(
-                        child: CircularProgressIndicator(
-                          valueColor: AlwaysStoppedAnimation(
-                            Theme.of(context).colorScheme.secondary,
-                          ),
+      RefreshIndicator(
+        color: Theme.of(context).colorScheme.secondary,
+        backgroundColor: Theme.of(context).backgroundColor,
+        strokeWidth: 4,
+        onRefresh: () async {
+          print("REFRESHING...");
+          viewModel.init();
+        },
+        child: Consumer<ThemeProvider>(
+          builder: (context, themeProvider, _) => SizedBox(
+            height: 100.h,
+            child: !viewModel.isInitialized
+                ? Container(
+                    height: 100.h,
+                    color: Theme.of(context).backgroundColor,
+                    child: Center(
+                      child: CircularProgressIndicator(
+                        valueColor: AlwaysStoppedAnimation(
+                          Theme.of(context).colorScheme.secondary,
                         ),
                       ),
                     ),
-                  ],
-                ),
+                  )
+                : Stack(
+                    children: [
+                      viewModel.hasError
+                          ? Center(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                // mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Image.asset(
+                                    "assets/img/404-${themeProvider.currentTheme}.png",
+                                    height: 40.h,
+                                    width: 100.w,
+                                    fit: BoxFit.contain,
+                                  ),
+                                  Text(
+                                    viewModel.errorMessage,
+                                    textAlign: TextAlign.center,
+                                    style: textStyle.apply(
+                                      color: Theme.of(context)
+                                          .textTheme
+                                          .bodyText1
+                                          ?.color,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            )
+                          : widget.builder(
+                              context,
+                              viewModel,
+                            ),
+                      Visibility(
+                        visible: viewModel.isLoading,
+                        child: Center(
+                          child: CircularProgressIndicator(
+                            valueColor: AlwaysStoppedAnimation(
+                              Theme.of(context).colorScheme.secondary,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+          ),
         ),
       );
 }

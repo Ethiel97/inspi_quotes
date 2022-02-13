@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
@@ -9,6 +10,8 @@ import 'package:smart_quotes/screens/home_screen.dart';
 import 'package:smart_quotes/screens/quotes_screen.dart';
 import 'package:smart_quotes/utils/colors.dart';
 import 'package:smart_quotes/utils/text_styles.dart';
+
+import 'search_screen.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({required Key key}) : super(key: key);
@@ -23,7 +26,7 @@ class _MainScreenState extends State<MainScreen> {
 
   List<Widget> screens = [
     const QuotesScreen(key: ValueKey("quotes")),
-    const HomeScreen(key: ValueKey("home")),
+    const SearchScreen(key: ValueKey("search")),
     const FavoriteQuotesScreen(key: ValueKey("fav_quotes")),
   ];
 
@@ -54,6 +57,14 @@ class _MainScreenState extends State<MainScreen> {
   @override
   void initState() {
     super.initState();
+
+    Future.delayed(Duration.zero, () {
+      SystemChrome.setSystemUIOverlayStyle(
+        SystemUiOverlayStyle(
+            // systemNavigationBarColor: Colors.blue, // navigation bar color
+            statusBarColor: Theme.of(context).backgroundColor),
+      );
+    });
   }
 
   @override
@@ -76,7 +87,7 @@ class _MainScreenState extends State<MainScreen> {
         appBar: PreferredSize(
           preferredSize: const Size.fromHeight(0.0),
           child: AppBar(
-            backgroundColor: Colors.transparent,
+            backgroundColor: Theme.of(context).backgroundColor,
             elevation: 0.0,
           ),
         ),
@@ -87,7 +98,7 @@ class _MainScreenState extends State<MainScreen> {
               padding: const EdgeInsets.only(
                 left: 24.0,
                 right: 24,
-                top: 10.0,
+                top: 12.0,
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -116,7 +127,7 @@ class _MainScreenState extends State<MainScreen> {
                       _themeProvider.currentTheme == 'dark'
                           ? Icons.light_mode
                           : Icons.dark_mode,
-                      size: 9.w,
+                      size: 8.w,
                     ),
                     color: Theme.of(context).iconTheme.color,
                   )
@@ -127,9 +138,11 @@ class _MainScreenState extends State<MainScreen> {
               height: 36,
             ),
             Center(
-              child: screens.elementAt(
-                _navigationProvider.currentIndex,
-              ),
+              child: screens.elementAt(_navigationProvider.currentIndex),
+              /*child: IndexedStack(
+                children: screens,
+                index: _navigationProvider.currentIndex,
+              ),*/
             ),
           ],
         ),

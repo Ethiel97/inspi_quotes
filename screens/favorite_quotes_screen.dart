@@ -55,7 +55,7 @@ class _FavoriteQuotesScreenState extends State<FavoriteQuotesScreen> {
                       height: 8,
                     ),
                     Text(
-                      quotesScreenSubtitle,
+                      favQuotesScreenSubtitle,
                       style: textStyle.apply(
                         color: Theme.of(context).textTheme.bodyText1?.color,
                         fontWeightDelta: 5,
@@ -87,7 +87,7 @@ class _FavoriteQuotesScreenState extends State<FavoriteQuotesScreen> {
                             height: 24,
                           ),
                           Text(
-                            "Empty list",
+                            "No saved quotes",
                             textAlign: TextAlign.center,
                             style: textStyle.apply(
                               color:
