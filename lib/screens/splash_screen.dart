@@ -92,7 +92,7 @@ class _SplashScreenState extends State<SplashScreen>
                       begin: Alignment.bottomCenter,
                       end: Alignment.topCenter,
                       colors: [
-                        primaryColor.withOpacity(.25),
+                        accentColor.withOpacity(.08),
                         Colors.black.withOpacity(.56)
                       ]),
                 ),
@@ -121,7 +121,7 @@ class _SplashScreenState extends State<SplashScreen>
                                   borderRadius: BorderRadius.circular(12),
                                 ),
                                 child: Text(
-                                  "I.",
+                                  "d",
                                   style: textStyle.apply(
                                     color: Colors.white,
                                     fontSizeDelta: 10,

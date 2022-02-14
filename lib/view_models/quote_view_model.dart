@@ -204,7 +204,7 @@ class QuoteViewModel extends BaseViewModel {
         "Notification",
         "Quoted added to your fav list",
       );
-    }else {
+    } else {
       unBookmark(quote);
     }
 
@@ -249,7 +249,7 @@ class QuoteViewModel extends BaseViewModel {
               height: 12,
             ),
             Text(
-              "Result",
+              "Translation Result",
               style: textStyle.apply(
                 color: Theme.of(context).textTheme.bodyText1?.color,
                 fontWeightDelta: 5,

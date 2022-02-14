@@ -5,11 +5,8 @@ import 'package:tinycolor2/tinycolor2.dart';
 //const primaryColor = Color(0xff414324);
 //const baseColor = Color(0xff3F88C5);
 //const baseColor = Color(0xff1479ff);
-const baseColor = Color(0xff0890DB);
-var primaryColor = TinyColor(baseColor).color;
 
 //var color = TinyColor(primaryColor).shade()
-var primaryColorDark = TinyColor(baseColor).darken().color;
 
 const secondaryColor = Color(0xffD72638);
 //const secondaryColor = Color(0xffff7854);

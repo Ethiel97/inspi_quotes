@@ -113,7 +113,7 @@ class _MainScreenState extends State<MainScreen> {
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Text(
-                      "I.",
+                      "d",
                       style: textStyle.apply(
                         color: Colors.white,
                         fontSizeDelta: 3,

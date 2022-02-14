@@ -18,7 +18,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   List<IntroScreen> pages = [
     IntroScreen(
       title: 'Votre inspiration',
-      imageAsset: 'assets/img/1.png',
+      imageAsset: 'assets/img/1-dark.png',
       description: "Des citations motivantes quotidiennes pour vous booster",
       headerBgColor: Colors.white,
       textStyle: textStyle,
@@ -26,7 +26,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     IntroScreen(
       title: "Votre Intellect",
       headerBgColor: Colors.white,
-      imageAsset: 'assets/img/2.png',
+      imageAsset: 'assets/img/2-dark.png',
       description: "Enrichissez vos connaissances avec de nouvelles citations",
       textStyle: textStyle,
     ),
