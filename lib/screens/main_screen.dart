@@ -98,7 +98,7 @@ class _MainScreenState extends State<MainScreen> {
               padding: const EdgeInsets.only(
                 left: 24.0,
                 right: 24,
-                top: 12.0,
+                top: 16.0,
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,

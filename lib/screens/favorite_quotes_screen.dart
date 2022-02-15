@@ -101,7 +101,7 @@ class _FavoriteQuotesScreenState extends State<FavoriteQuotesScreen> {
                       padding: const EdgeInsets.symmetric(
                         horizontal: 6,
                       ),
-                      child: TCard(
+                      child: /*TCard(
                         size: Size(
                           100.w,
                           58.h,
@@ -126,6 +126,25 @@ class _FavoriteQuotesScreenState extends State<FavoriteQuotesScreen> {
                         onEnd: () {
                           print('end');
                         },
+                      )*/
+                          SizedBox(
+                        height: 56.h,
+                        width: 70.w,
+                        child: PageView.builder(
+                          pageSnapping: true,
+                          itemCount: quoteViewModel.savedQuotes.length,
+                          itemBuilder: (context, index) => Padding(
+                            padding: const EdgeInsets.only(
+                              right: 18.0,
+                            ),
+                            child: WQuoteCard(
+                              key: UniqueKey(),
+                              quote: quoteViewModel.savedQuotes[index],
+                              viewModel: quoteViewModel,
+                              onTranslate: () => {},
+                            ),
+                          ),
+                        ),
                       ),
                     ),
             ],

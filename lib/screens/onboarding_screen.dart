@@ -17,17 +17,17 @@ class OnboardingScreen extends StatefulWidget {
 class _OnboardingScreenState extends State<OnboardingScreen> {
   List<IntroScreen> pages = [
     IntroScreen(
-      title: 'Votre inspiration',
+      title: 'Daily boost',
       imageAsset: 'assets/img/1-dark.png',
-      description: "Des citations motivantes quotidiennes pour vous booster",
+      description: "Daily motivational quotes to boost you",
       headerBgColor: Colors.white,
       textStyle: textStyle,
     ),
     IntroScreen(
-      title: "Votre Intellect",
+      title: "Intellect",
       headerBgColor: Colors.white,
       imageAsset: 'assets/img/2-dark.png',
-      description: "Enrichissez vos connaissances avec de nouvelles citations",
+      description: "Enrich your knowledge with new quotes",
       textStyle: textStyle,
     ),
   ];

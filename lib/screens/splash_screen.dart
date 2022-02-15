@@ -5,6 +5,7 @@ import 'package:get/route_manager.dart';
 import 'package:sizer/sizer.dart';
 import 'package:smart_quotes/utils/app_router.dart';
 import 'package:smart_quotes/utils/colors.dart';
+import 'package:smart_quotes/utils/constants.dart';
 import 'package:smart_quotes/utils/local_storage.dart';
 import 'package:smart_quotes/utils/text_styles.dart';
 
@@ -131,13 +132,16 @@ class _SplashScreenState extends State<SplashScreen>
                               ),
                               type: MaterialType.transparency,
                             ),
-                            SizedBox(height: 10.h),
+                            SizedBox(height: 8.h),
                             Material(
                               type: MaterialType.transparency,
                               child: Text(
-                                "INSPI QUOTES",
+                                appName,
                                 style: TextStyle(
-                                    color: Colors.white, fontSize: 12.w),
+                                  color: Colors.white,
+                                  fontSize: 12.w,
+                                  fontWeight: FontWeight.bold
+                                ),
                               ),
                             ),
                             /* SizedBox(

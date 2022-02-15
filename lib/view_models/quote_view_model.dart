@@ -37,8 +37,9 @@ class QuoteViewModel extends BaseViewModel {
   @override
   FutureOr<void> init() async {
     boxQuotes = Hive.box(quotesBox);
+    await getRandomQuote();
     await fetchTags();
-    await fetchAll(query: {'page': 30, 'limit': 30});
+    await fetchAll(query: {'page': 61, 'limit': 30});
   }
 
   fetchTags() async {
@@ -139,6 +140,8 @@ class QuoteViewModel extends BaseViewModel {
     try {
       changeStatus();
       quote = await apiRepository.getRandomQuote(query: query);
+
+      print("RANDOM QUOTE ${quote.content}");
     } catch (e) {
       debugPrint(e.toString());
       error = true;

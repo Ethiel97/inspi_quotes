@@ -9,7 +9,6 @@ import 'package:tinycolor2/tinycolor2.dart';
 class ThemeProvider with ChangeNotifier {
   final String _themeMode = 'THEME_MODE';
   String _currentTheme = 'dark';
-  ThemeData? _themeData;
 
   final ThemeData _darkTheme = ThemeData(
     brightness: Brightness.dark,
@@ -58,7 +57,9 @@ class ThemeProvider with ChangeNotifier {
     ),
   );
 
-  ThemeData? get theme => _themeData;
+  ThemeData? _themeData;
+
+  ThemeData? get theme => _themeData ?? _darkTheme;
 
   String get currentTheme => _currentTheme;
 
@@ -66,15 +67,18 @@ class ThemeProvider with ChangeNotifier {
     LocalStorage.getData(_themeMode).then((value) {
       switch (value?.toString() ?? 'dark') {
         case 'light':
-          _themeData = _lightTheme;
-          _currentTheme = value;
+          setLightMode();
           break;
         case 'dark':
-          _themeData = _darkTheme;
-          _currentTheme = value;
+          setDarkMode();
+          break;
+        default:
+          setDarkMode();
           break;
       }
       notifyListeners();
+
+      changeStatusBarColor();
     }).catchError((e) => print(e));
   }
 
@@ -92,13 +96,7 @@ class ThemeProvider with ChangeNotifier {
       setDarkMode();
     }
 
-    SystemChrome.setSystemUIOverlayStyle(
-      SystemUiOverlayStyle(
-        statusBarColor: currentTheme == 'dark'
-            ? screenBackgroundColor
-            : Colors.white.darken(4),
-      ),
-    );
+    changeStatusBarColor();
   }
 
   void setLightMode() {
@@ -107,5 +105,15 @@ class ThemeProvider with ChangeNotifier {
     LocalStorage.saveData(_themeMode, _currentTheme);
 
     notifyListeners();
+  }
+
+  changeStatusBarColor() {
+    SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle(
+        statusBarColor: currentTheme == 'dark'
+            ? screenBackgroundColor
+            : whiteBackgroundColor.darken(4),
+      ),
+    );
   }
 }

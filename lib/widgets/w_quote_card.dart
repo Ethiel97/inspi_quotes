@@ -90,15 +90,17 @@ class WQuoteCard extends StatelessWidget {
                 height: 16,
               ),
               Expanded(
-                child: Text(
-                  quote.content,
-                  softWrap: true,
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 10,
-                  style: textStyle.apply(
-                    fontSizeDelta: 13,
-                    fontWeightDelta: 10,
-                    color: Theme.of(context).textTheme.bodyText1?.color,
+                child: SingleChildScrollView(
+                  child: Text(
+                    quote.content,
+                    softWrap: true,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 10,
+                    style: textStyle.apply(
+                      fontSizeDelta: 13,
+                      fontWeightDelta: 10,
+                      color: Theme.of(context).textTheme.bodyText1?.color,
+                    ),
                   ),
                 ),
               ),

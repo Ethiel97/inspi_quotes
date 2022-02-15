@@ -114,6 +114,9 @@ class _QuotesScreenState extends State<QuotesScreen> {
                 },
                 onEnd: () {
                   print('end');
+
+                  //fetch all
+                  quoteViewModel.fetchAll();
                 },
               ),
             ),

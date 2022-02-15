@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:smart_quotes/models/tag.dart';
 import 'package:smart_quotes/utils/text_styles.dart';
 import 'package:smart_quotes/view_models/quote_view_model.dart';
-import 'package:tinycolor2/src/color_extension.dart';
+import 'package:tinycolor2/tinycolor2.dart';
 
 class WTag extends StatelessWidget {
   const WTag({
