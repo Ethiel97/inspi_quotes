@@ -29,98 +29,96 @@ class _QuotesScreenState extends State<QuotesScreen> {
       );
 
   Widget _buildScreen(BuildContext context, QuoteViewModel quoteViewModel) =>
-      SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(left: 24.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    Jiffy().yMMMEd.toString(),
-                    style: textStyle.apply(
-                      color: Theme.of(context)
-                          .textTheme
-                          .bodyText1
-                          ?.color
-                          ?.withOpacity(
-                            .5,
-                          ),
-                      fontSizeDelta: -4,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 8,
-                  ),
-                  Text(
-                    quotesScreenSubtitle,
-                    style: textStyle.apply(
-                      color: Theme.of(context).textTheme.bodyText1?.color,
-                      fontWeightDelta: 5,
-                      fontSizeDelta: 8,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(
-              height: 24,
-            ),
-            /*SizedBox(
-              width: 100.w,
-              height: 60.h,
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemBuilder: (context, index) => SizedBox(
-                  width: 100.w,
-                  height: 60.h,
-                  child: WQuoteCard(
-                    key: UniqueKey(),
-                    quote: quoteViewModel.quotes[index],
-                    viewModel: quoteViewModel,
+      ListView(
+        physics: const BouncingScrollPhysics(),
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(left: 24.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  Jiffy().yMMMEd.toString(),
+                  style: textStyle.apply(
+                    color: Theme.of(context)
+                        .textTheme
+                        .bodyText1
+                        ?.color
+                        ?.withOpacity(
+                          .5,
+                        ),
+                    fontSizeDelta: -4,
                   ),
                 ),
-                itemCount: quoteViewModel.total
-              ),
-            ),*/
-
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 6,
-              ),
-              child: TCard(
-                size: Size(
-                  100.w,
-                  58.h,
+                const SizedBox(
+                  height: 8,
                 ),
-                controller: _controller,
-                cards: quoteViewModel.quotes
-                    .map(
-                      (quote) => WQuoteCard(
-                        key: UniqueKey(),
-                        quote: quote,
-                        viewModel: quoteViewModel,
-                        onTranslate: () => {},
-                      ),
-                    )
-                    .toList(),
-                onForward: (index, info) {
-                  print(index);
-                },
-                onBack: (index, info) {
-                  print(index);
-                },
-                onEnd: () {
-                  print('end');
-
-                  //fetch all
-                  quoteViewModel.fetchAll();
-                },
-              ),
+                Text(
+                  quotesScreenSubtitle,
+                  style: textStyle.apply(
+                    color: Theme.of(context).textTheme.bodyText1?.color,
+                    fontWeightDelta: 5,
+                    fontSizeDelta: 8,
+                  ),
+                ),
+              ],
             ),
-          ],
-        ),
+          ),
+          const SizedBox(
+            height: 24,
+          ),
+          /*SizedBox(
+            width: 100.w,
+            height: 60.h,
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemBuilder: (context, index) => SizedBox(
+                width: 100.w,
+                height: 60.h,
+                child: WQuoteCard(
+                  key: UniqueKey(),
+                  quote: quoteViewModel.quotes[index],
+                  viewModel: quoteViewModel,
+                ),
+              ),
+              itemCount: quoteViewModel.total
+            ),
+          ),*/
+
+          Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 6,
+            ),
+            child: TCard(
+              size: Size(
+                100.w,
+                58.h,
+              ),
+              controller: _controller,
+              cards: quoteViewModel.quotes
+                  .map(
+                    (quote) => WQuoteCard(
+                      key: UniqueKey(),
+                      quote: quote,
+                      viewModel: quoteViewModel,
+                      onTranslate: () => {},
+                    ),
+                  )
+                  .toList(),
+              onForward: (index, info) {
+                print(index);
+              },
+              onBack: (index, info) {
+                print(index);
+              },
+              onEnd: () {
+                print('end');
+
+                //fetch all
+                quoteViewModel.fetchAll();
+              },
+            ),
+          ),
+        ],
       );
 }

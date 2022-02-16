@@ -40,9 +40,10 @@ class _SearchScreenState extends State<SearchScreen> {
       Consumer<ThemeProvider>(
           builder: (context, themeProvider, _) => ListView(
                 physics: const BouncingScrollPhysics(),
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 24,
-                  vertical: 0,
+                padding: EdgeInsets.only(
+                  left: 24,
+                  right: 24,
+                  bottom: 33.h,
                 ),
                 children: [
                   Container(

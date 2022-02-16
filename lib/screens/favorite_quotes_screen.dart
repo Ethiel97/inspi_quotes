@@ -129,7 +129,7 @@ class _FavoriteQuotesScreenState extends State<FavoriteQuotesScreen> {
                       )*/
                           SizedBox(
                         height: 56.h,
-                        width: 70.w,
+                        width: 100.w,
                         child: PageView.builder(
                           pageSnapping: true,
                           itemCount: quoteViewModel.savedQuotes.length,
