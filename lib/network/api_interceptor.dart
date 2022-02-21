@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
-import 'dart:typed_data';
+// import 'dart:typed_data';
 
 import 'package:http_interceptor/http/interceptor_contract.dart';
 import 'package:http_interceptor/models/request_data.dart';
@@ -38,7 +38,7 @@ class ApiInterceptor implements InterceptorContract {
     var responseData = isResourceList ? parsedData['results'] : parsedData;
 
     responseData = jsonEncode(responseData);
-    var dataBytes = Uint8List.fromList(responseData.codeUnits);
+    // var dataBytes = Uint8List.fromList(responseData.codeUnits);
 
     // print(parsedData.runtimeType.toString());
 

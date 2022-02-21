@@ -43,14 +43,14 @@ class _SplashScreenState extends State<SplashScreen>
     try {
       if (firstTime!) {
         // LocalStorage.setIsFirstLaunch(false);
-        Get.offAndToNamed(ON_BOARDING);
+        Get.offAndToNamed(onBoarding);
       } else {
-        Get.offAndToNamed(MAIN);
+        Get.offAndToNamed(landing);
       }
     } catch (e) {
-      print(e);
+      debugPrint("$e");
       // LocalStorage.setIsFirstLaunch(false);
-      Get.offAndToNamed(ON_BOARDING);
+      Get.offAndToNamed(onBoarding);
     }
   }
 
@@ -138,10 +138,9 @@ class _SplashScreenState extends State<SplashScreen>
                               child: Text(
                                 appName,
                                 style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 12.w,
-                                  fontWeight: FontWeight.bold
-                                ),
+                                    color: Colors.white,
+                                    fontSize: 12.w,
+                                    fontWeight: FontWeight.bold),
                               ),
                             ),
                             /* SizedBox(

@@ -6,7 +6,6 @@ import 'package:sizer/sizer.dart';
 import 'package:smart_quotes/providers/navigation_provider.dart';
 import 'package:smart_quotes/providers/theme_provider.dart';
 import 'package:smart_quotes/screens/favorite_quotes_screen.dart';
-import 'package:smart_quotes/screens/home_screen.dart';
 import 'package:smart_quotes/screens/quotes_screen.dart';
 import 'package:smart_quotes/utils/colors.dart';
 import 'package:smart_quotes/utils/text_styles.dart';

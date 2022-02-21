@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:sizer/sizer.dart';
-import 'package:smart_quotes/utils/colors.dart';
 import 'package:smart_quotes/utils/constants.dart';
 import 'package:smart_quotes/utils/text_styles.dart';
 import 'package:smart_quotes/view_models/quote_view_model.dart';
 import 'package:smart_quotes/views/base_view.dart';
 import 'package:smart_quotes/widgets/w_quote_card.dart';
 import 'package:tcard/tcard.dart';
-import 'package:tinycolor2/tinycolor2.dart';
 
 class QuotesScreen extends StatefulWidget {
   const QuotesScreen({required Key key}) : super(key: key);
@@ -106,13 +103,11 @@ class _QuotesScreenState extends State<QuotesScreen> {
                   )
                   .toList(),
               onForward: (index, info) {
-                print(index);
               },
               onBack: (index, info) {
-                print(index);
               },
               onEnd: () {
-                print('end');
+                debugPrint('end');
 
                 //fetch all
                 quoteViewModel.fetchAll();

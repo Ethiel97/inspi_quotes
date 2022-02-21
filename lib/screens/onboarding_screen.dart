@@ -44,7 +44,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   goToNextPage() {
     LocalStorage.setIsFirstLaunch(false);
-    Navigator.of(context).pushReplacementNamed(MAIN);
+    Navigator.of(context).pushReplacementNamed(landing);
   }
 
   @override

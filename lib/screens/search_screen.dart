@@ -1,16 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
-import 'package:smart_quotes/models/quote.dart';
 import 'package:smart_quotes/providers/theme_provider.dart';
-import 'package:smart_quotes/utils/text_styles.dart';
 import 'package:smart_quotes/view_models/quote_view_model.dart';
 import 'package:smart_quotes/views/base_view.dart';
 import 'package:smart_quotes/widgets/w_quote_card.dart';
 import 'package:smart_quotes/widgets/w_tag.dart';
-import 'package:tcard/tcard.dart';
 import 'package:tinycolor2/tinycolor2.dart';
 
 class SearchScreen extends StatefulWidget {
@@ -21,9 +17,6 @@ class SearchScreen extends StatefulWidget {
 }
 
 class _SearchScreenState extends State<SearchScreen> {
-  final PageController _pageController = PageController(initialPage: 0);
-  double _currentPage = 0.0;
-
   @override
   void initState() {
     super.initState();

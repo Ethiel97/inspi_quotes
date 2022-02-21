@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
 import 'package:smart_quotes/utils/colors.dart';
 
-enum ConnectivityStatus { Wifi, Cellular, Offline }
+enum ConnectivityStatus { wifi, cellular, offline }
 
 class ConnectivityService {
   StreamController<ConnectivityStatus> connectionStatusController =
@@ -20,18 +20,18 @@ class ConnectivityService {
   ConnectivityStatus _getConnectivityStatusChange(ConnectivityResult result) {
     switch (result) {
       case ConnectivityResult.mobile:
-        return ConnectivityStatus.Cellular;
+        return ConnectivityStatus.cellular;
       case ConnectivityResult.wifi:
-        return ConnectivityStatus.Wifi;
+        return ConnectivityStatus.wifi;
       case ConnectivityResult.none:
-        return ConnectivityStatus.Offline;
+        return ConnectivityStatus.offline;
       default:
-        return ConnectivityStatus.Offline;
+        return ConnectivityStatus.offline;
     }
   }
 
   notify(status) {
-    if (status == ConnectivityStatus.Offline) {
+    if (status == ConnectivityStatus.offline) {
       Get.snackbar(
         'Notification',
         "Please! Check your network",

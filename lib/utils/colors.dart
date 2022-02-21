@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:tinycolor2/tinycolor2.dart';
 
 //const primaryColor = Color(0xff3A86FF);
 //const primaryColor = Color(0xff414324);

@@ -8,7 +8,6 @@ import 'package:smart_quotes/utils/text_styles.dart';
 import 'package:smart_quotes/view_models/quote_view_model.dart';
 import 'package:smart_quotes/views/base_view.dart';
 import 'package:smart_quotes/widgets/w_quote_card.dart';
-import 'package:tcard/tcard.dart';
 
 class FavoriteQuotesScreen extends StatefulWidget {
   const FavoriteQuotesScreen({required Key key}) : super(key: key);
@@ -18,7 +17,6 @@ class FavoriteQuotesScreen extends StatefulWidget {
 }
 
 class _FavoriteQuotesScreenState extends State<FavoriteQuotesScreen> {
-  final TCardController _controller = TCardController();
 
   @override
   Widget build(BuildContext context) => BaseView<QuoteViewModel>(

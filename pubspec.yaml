@@ -56,7 +56,6 @@ dependencies:
   flutter_iconly: ^1.0.2
   fluttericon: ^2.0.0
   tcard: ^1.3.5
-  flutter_tinder_swipe:
   share_plus:
   hive_flutter:
   hive:

@@ -38,7 +38,7 @@ class _BaseViewState<T extends BaseViewModel> extends State<BaseView<T>> {
         backgroundColor: Theme.of(context).backgroundColor,
         strokeWidth: 4,
         onRefresh: () async {
-          print("REFRESHING...");
+          debugPrint("REFRESHING...");
           viewModel.init();
         },
         child: Consumer<ThemeProvider>(

@@ -84,14 +84,12 @@ class QuoteViewModel extends BaseViewModel {
       changeStatus();
       String tags = selectedTags.map((e) => e.name).toList().join("|");
 
-      print("SELECTED TAGS $tags");
-
       // filteredQuotes.clear();
       filteredQuotes = (await apiRepository.getQuotesForTag(tags));
       filteredQuotes.shuffle();
       changeStatus();
     } catch (e) {
-      print(e);
+      debugPrint("$e");
     } finally {
       finishLoading();
     }
@@ -104,7 +102,6 @@ class QuoteViewModel extends BaseViewModel {
 
       quotes.shuffle();
     } catch (e) {
-      print(e);
       debugPrint(e.toString());
 
       quotes = [];
@@ -141,7 +138,7 @@ class QuoteViewModel extends BaseViewModel {
       changeStatus();
       quote = await apiRepository.getRandomQuote(query: query);
 
-      print("RANDOM QUOTE ${quote.content}");
+      debugPrint("RANDOM QUOTE ${quote.content}");
     } catch (e) {
       debugPrint(e.toString());
       error = true;
@@ -192,7 +189,7 @@ class QuoteViewModel extends BaseViewModel {
 
     } catch (e) {
       errorMessage = "Oops, something went wrong";
-      print(e);
+      debugPrint("$e");
     } finally {
       finishLoading();
     }
@@ -211,7 +208,6 @@ class QuoteViewModel extends BaseViewModel {
       unBookmark(quote);
     }
 
-    print("BOOKMARING");
     /*else {
       unBookmark(quote);
     }*/

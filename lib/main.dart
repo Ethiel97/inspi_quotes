@@ -44,7 +44,7 @@ void main() async {
         StreamProvider<ConnectivityStatus>(
           create: (context) =>
               ConnectivityService().connectionStatusController.stream,
-          initialData: ConnectivityStatus.Wifi,
+          initialData: ConnectivityStatus.wifi,
         ),
       ],
       child: const MyApp(),

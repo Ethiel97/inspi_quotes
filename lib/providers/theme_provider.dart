@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:get/get.dart';
 import 'package:smart_quotes/utils/colors.dart';
 import 'package:smart_quotes/utils/local_storage.dart';
 import 'package:smart_quotes/utils/text_styles.dart';
@@ -79,7 +78,9 @@ class ThemeProvider with ChangeNotifier {
       notifyListeners();
 
       changeStatusBarColor();
-    }).catchError((e) => print(e));
+    }).catchError((e) {
+      debugPrint(e);
+    });
   }
 
   void setDarkMode() {
