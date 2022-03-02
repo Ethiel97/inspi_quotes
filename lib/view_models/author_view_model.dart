@@ -1,7 +1,9 @@
 import 'dart:async';
 
 import 'package:flutter/foundation.dart';
+import 'package:get/get.dart';
 import 'package:smart_quotes/models/author.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'base_view_model.dart';
 
@@ -11,7 +13,9 @@ class AuthorViewModel extends BaseViewModel {
   late Author author;
 
   @override
-  FutureOr<void> init() {}
+  FutureOr<void> init() {
+    errorMessage = AppLocalizations.of(Get.context!)!.something_went_wrong;
+  }
 
   fetchAll({Map<String, dynamic> query = const {}}) async {
     try {
@@ -24,7 +28,6 @@ class AuthorViewModel extends BaseViewModel {
       authors = [];
 
       error = true;
-      errorMessage = "Oops, something went wrong";
     } finally {
       changeStatus();
     }
@@ -37,7 +40,6 @@ class AuthorViewModel extends BaseViewModel {
     } catch (e) {
       debugPrint(e.toString());
       error = true;
-      errorMessage = "Oops, something went wrong";
     } finally {
       changeStatus();
     }

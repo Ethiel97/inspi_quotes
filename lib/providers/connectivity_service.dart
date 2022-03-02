@@ -4,6 +4,7 @@ import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
 import 'package:smart_quotes/utils/colors.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 enum ConnectivityStatus { wifi, cellular, offline }
 
@@ -33,8 +34,8 @@ class ConnectivityService {
   notify(status) {
     if (status == ConnectivityStatus.offline) {
       Get.snackbar(
-        'Notification',
-        "Please! Check your network",
+        AppLocalizations.of(Get.context!)!.notification,
+        AppLocalizations.of(Get.context!)!.check_network_connection,
         duration: const Duration(seconds: 7),
         backgroundColor: accentColor,
         snackPosition: SnackPosition.TOP,

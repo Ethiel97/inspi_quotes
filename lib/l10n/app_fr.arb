@@ -1,0 +1,23 @@
+{
+  "daily_fuel": "Ton carburant quotidien \uD83D\uDE0E",
+  "search_here": "Recherchez ici",
+  "favorite_quote": "Citations préférées \uD83D\uDE0B",
+  "no_saved_quotes": "Aucune citation préférée",
+  "something_went_wrong": "Oops, une erreur est survenue",
+  "quote_added": "Citation ajoutée à votre liste de citations préféréés",
+  "quote_removed": "Citation retirée de votre liste de citations préféréés",
+  "translation_result": "Résultat de la traduction",
+  "notification": "Notification",
+  "daily_boost": "Boost quotidien",
+  "quotes_to_boost_you": "Citations quotidiennes pour vous motiver",
+  "intellect": "Intellect",
+  "enrich_knowledge": "Enrichissez vos connaissances avec de nouvelles citations",
+  "by": "Par",
+  "check_network_connection": "Veuillez vérifier connexion internet svp!",
+  "skip": "Passer",
+  "home": "Accueil",
+  "search": "Recherche",
+  "saved": "Favoris",
+  "check_out_this_quote": "Regardez cette citation",
+  "on_dailyQ": "On dailyQ"
+}

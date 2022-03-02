@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 import 'package:smart_quotes/providers/navigation_provider.dart';
@@ -9,6 +10,7 @@ import 'package:smart_quotes/screens/favorite_quotes_screen.dart';
 import 'package:smart_quotes/screens/quotes_screen.dart';
 import 'package:smart_quotes/utils/colors.dart';
 import 'package:smart_quotes/utils/text_styles.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'search_screen.dart';
 
@@ -30,26 +32,26 @@ class _MainScreenState extends State<MainScreen> {
   ];
 
   List<BottomNavigationBarItem> navigationBarItems = [
-    const BottomNavigationBarItem(
-      icon: Icon(
+    BottomNavigationBarItem(
+      icon: const Icon(
         IconlyBold.home,
       ),
       backgroundColor: Colors.transparent,
-      label: 'Home',
+      label: AppLocalizations.of(Get.context!)!.home,
     ),
-    const BottomNavigationBarItem(
-      icon: Icon(
+    BottomNavigationBarItem(
+      icon: const Icon(
         IconlyBold.search,
       ),
       backgroundColor: Colors.transparent,
-      label: 'Search',
+      label: AppLocalizations.of(Get.context!)!.search,
     ),
-    const BottomNavigationBarItem(
-      icon: Icon(
+    BottomNavigationBarItem(
+      icon: const Icon(
         IconlyBold.bookmark,
       ),
       backgroundColor: Colors.transparent,
-      label: 'Saved',
+      label: AppLocalizations.of(Get.context!)!.saved,
     ),
   ];
 
@@ -60,10 +62,8 @@ class _MainScreenState extends State<MainScreen> {
     Future.delayed(Duration.zero, () {
       SystemChrome.setSystemUIOverlayStyle(
         SystemUiOverlayStyle(
-          // systemNavigationBarColor: Colors.blue, // navigation bar color
-            statusBarColor: Theme
-                .of(context)
-                .backgroundColor),
+            // systemNavigationBarColor: Colors.blue, // navigation bar color
+            statusBarColor: Theme.of(context).backgroundColor),
       );
     });
   }
@@ -80,20 +80,15 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   @override
-  Widget build(BuildContext context) =>
-      Scaffold(
+  Widget build(BuildContext context) => Scaffold(
         // backgroundColor: screenBackgroundColor,
-        backgroundColor: Theme
-            .of(context)
-            .backgroundColor,
+        backgroundColor: Theme.of(context).backgroundColor,
         extendBodyBehindAppBar: true,
         extendBody: true,
         appBar: PreferredSize(
           preferredSize: const Size.fromHeight(0.0),
           child: AppBar(
-            backgroundColor: Theme
-                .of(context)
-                .backgroundColor,
+            backgroundColor: Theme.of(context).backgroundColor,
             elevation: 0.0,
           ),
         ),
@@ -135,10 +130,7 @@ class _MainScreenState extends State<MainScreen> {
                           : Icons.dark_mode,
                       size: 8.w,
                     ),
-                    color: Theme
-                        .of(context)
-                        .iconTheme
-                        .color,
+                    color: Theme.of(context).iconTheme.color,
                   )
                 ],
               ),
@@ -158,22 +150,15 @@ class _MainScreenState extends State<MainScreen> {
         bottomNavigationBar: BottomNavigationBar(
           elevation: 0.0,
           type: BottomNavigationBarType.fixed,
-          backgroundColor: Theme
-              .of(context)
-              .backgroundColor,
+          backgroundColor: Theme.of(context).backgroundColor,
           showSelectedLabels: false,
           showUnselectedLabels: false,
           enableFeedback: true,
           iconSize: 24,
           items: navigationBarItems,
           currentIndex: _navigationProvider.currentIndex,
-          selectedItemColor: Theme
-              .of(context)
-              .colorScheme
-              .secondary,
-          unselectedItemColor: Theme
-              .of(context)
-              .unselectedWidgetColor,
+          selectedItemColor: Theme.of(context).colorScheme.secondary,
+          unselectedItemColor: Theme.of(context).unselectedWidgetColor,
           onTap: _onItemTapped,
         ),
       );

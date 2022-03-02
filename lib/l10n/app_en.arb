@@ -1,0 +1,23 @@
+{
+  "daily_fuel": "Your daily fuel \uD83D\uDE0E",
+  "search_here": "Search here",
+  "favorite_quote": "Your favorite quotes \uD83D\uDE0B",
+  "no_saved_quotes": "No saved quotes",
+  "something_went_wrong": "Oops, something went wrong",
+  "quote_added": "Quote added to your fav list",
+  "quote_removed": "Quote removed from your fav list",
+  "translation_result": "Translation Result",
+  "notification": "Notification",
+  "daily_boost": "Daily boost",
+  "quotes_to_boost_you": "Daily motivational quotes to boost you",
+  "intellect": "Intellect",
+  "enrich_knowledge": "Enrich your knowledge with new quotes",
+  "by": "By",
+  "check_network_connection": "Please check your network connection!",
+  "skip": "Skip",
+  "home": "Home",
+  "search": "Search",
+  "saved": "Saved",
+  "check_out_this_quote": "Check out this quote",
+  "on_dailyQ": "On dailyQ"
+}

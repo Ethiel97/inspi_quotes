@@ -10,7 +10,7 @@ import 'package:share_plus/share_plus.dart';
 import 'package:smart_quotes/models/tag.dart';
 import 'package:smart_quotes/utils/text_styles.dart';
 import 'package:tinycolor2/tinycolor2.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'base_view_model.dart';
 
 class QuoteViewModel extends BaseViewModel {
@@ -40,6 +40,7 @@ class QuoteViewModel extends BaseViewModel {
     await getRandomQuote();
     await fetchTags();
     await fetchAll(query: {'page': 61, 'limit': 30});
+    errorMessage = AppLocalizations.of(Get.context!)!.something_went_wrong;
   }
 
   fetchTags() async {
@@ -107,8 +108,6 @@ class QuoteViewModel extends BaseViewModel {
       quotes = [];
       tags = [];
       error = true;
-
-      errorMessage = "Oops, something went wrong";
     } finally {
       changeStatus();
       finishLoading();
@@ -125,8 +124,6 @@ class QuoteViewModel extends BaseViewModel {
 
       quotes = [];
       error = true;
-
-      errorMessage = "Oops, something went wrong";
     } finally {
       changeStatus();
       finishLoading();
@@ -142,8 +139,6 @@ class QuoteViewModel extends BaseViewModel {
     } catch (e) {
       debugPrint(e.toString());
       error = true;
-
-      errorMessage = "Oops, something went wrong";
     } finally {
       changeStatus();
       finishLoading();
@@ -157,8 +152,6 @@ class QuoteViewModel extends BaseViewModel {
     } catch (e) {
       debugPrint(e.toString());
       error = true;
-
-      errorMessage = "Oops, something went wrong";
     } finally {
       changeStatus();
       finishLoading();
@@ -166,7 +159,8 @@ class QuoteViewModel extends BaseViewModel {
   }
 
   void shareQuote(Quote quote) {
-    Share.share("Check out this quote ${quote.content} on Inspi Quotes");
+    Share.share(
+        '${AppLocalizations.of(Get.context!)!.check_out_this_quote} "${quote.content}"\n ${AppLocalizations.of(Get.context!)!.on_dailyQ}: ${GetPlatform.isAndroid ? "https://bit.ly/dailyQ_ps" : ""}');
   }
 
   void translateQuote(BuildContext context, Quote quote) async {
@@ -188,7 +182,6 @@ class QuoteViewModel extends BaseViewModel {
       quotes.replaceRange(quotePosition, quotePosition + 1, [quote]);*/
 
     } catch (e) {
-      errorMessage = "Oops, something went wrong";
       debugPrint("$e");
     } finally {
       finishLoading();
@@ -201,8 +194,8 @@ class QuoteViewModel extends BaseViewModel {
       boxQuotes.put(quote.id, quote);
 
       Get.snackbar(
-        "Notification",
-        "Quoted added to your fav list",
+        AppLocalizations.of(Get.context!)!.notification,
+        AppLocalizations.of(Get.context!)!.quote_added,
       );
     } else {
       unBookmark(quote);
@@ -221,8 +214,8 @@ class QuoteViewModel extends BaseViewModel {
     reloadState();
 
     Get.snackbar(
-      "Notification",
-      "Quoted remove from your fav list",
+      AppLocalizations.of(Get.context!)!.notification,
+      AppLocalizations.of(Get.context!)!.quote_removed,
       colorText: Colors.white,
     );
   }
@@ -248,7 +241,7 @@ class QuoteViewModel extends BaseViewModel {
               height: 12,
             ),
             Text(
-              "Translation Result",
+              AppLocalizations.of(context)!.translation_result,
               style: textStyle.apply(
                 color: Theme.of(context).textTheme.bodyText1?.color,
                 fontWeightDelta: 5,

@@ -7,6 +7,7 @@ import 'package:smart_quotes/utils/colors.dart';
 import 'package:smart_quotes/utils/text_styles.dart';
 import 'package:smart_quotes/view_models/quote_view_model.dart';
 import 'package:tinycolor2/tinycolor2.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class WQuoteCard extends StatelessWidget {
   const WQuoteCard({
@@ -111,7 +112,7 @@ class WQuoteCard extends StatelessWidget {
                 height: 16,
               ),
               Text(
-                "By ${quote.author}",
+                "${AppLocalizations.of(context)!.by} ${quote.author}",
                 style: textStyle.apply(
                   color: Theme.of(context)
                       .textTheme
@@ -121,6 +122,7 @@ class WQuoteCard extends StatelessWidget {
                   fontSizeDelta: -2,
                 ),
               ),
+
               /*const SizedBox(
                 height: 16,
               ),
@@ -145,6 +147,7 @@ class WQuoteCard extends StatelessWidget {
               const SizedBox(
                 height: 16,
               ),
+
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [

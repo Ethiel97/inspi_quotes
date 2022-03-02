@@ -6,7 +6,7 @@ import 'package:smart_quotes/utils/text_styles.dart';
 import 'package:tinycolor2/tinycolor2.dart';
 
 class ThemeProvider with ChangeNotifier {
-  final String _themeMode = 'THEME_MODE';
+  final String _themeMode = 'THEME_STATUS';
   String _currentTheme = 'dark';
 
   final ThemeData _darkTheme = ThemeData(

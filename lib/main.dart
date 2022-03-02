@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/route_manager.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
@@ -12,6 +13,7 @@ import 'models/tag.dart';
 import 'providers/connectivity_service.dart';
 import 'screens/splash_screen.dart';
 import 'utils/app_router.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 var quotesBox = 'quotes';
 var authorsBox = 'authors';
@@ -77,6 +79,13 @@ class _MyAppState extends State<MyApp> {
       builder: (context, themeProvider, _) => Sizer(
         builder: (context, orientation, deviceType) => GetMaterialApp(
           title: 'Inspi Quotes',
+          localizationsDelegates: const [
+            AppLocalizations.delegate,
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
+          supportedLocales: AppLocalizations.supportedLocales,
           debugShowCheckedModeBanner: false,
           theme: themeProvider.theme,
           routes: appRoutes,

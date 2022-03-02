@@ -8,6 +8,7 @@ import 'package:smart_quotes/utils/text_styles.dart';
 import 'package:smart_quotes/view_models/quote_view_model.dart';
 import 'package:smart_quotes/views/base_view.dart';
 import 'package:smart_quotes/widgets/w_quote_card.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class FavoriteQuotesScreen extends StatefulWidget {
   const FavoriteQuotesScreen({required Key key}) : super(key: key);
@@ -17,7 +18,6 @@ class FavoriteQuotesScreen extends StatefulWidget {
 }
 
 class _FavoriteQuotesScreenState extends State<FavoriteQuotesScreen> {
-
   @override
   Widget build(BuildContext context) => BaseView<QuoteViewModel>(
         key: UniqueKey(),
@@ -53,7 +53,7 @@ class _FavoriteQuotesScreenState extends State<FavoriteQuotesScreen> {
                       height: 8,
                     ),
                     Text(
-                      favQuotesScreenSubtitle,
+                        AppLocalizations.of(context)!.favorite_quote,
                       style: textStyle.apply(
                         color: Theme.of(context).textTheme.bodyText1?.color,
                         fontWeightDelta: 5,
@@ -85,7 +85,7 @@ class _FavoriteQuotesScreenState extends State<FavoriteQuotesScreen> {
                             height: 24,
                           ),
                           Text(
-                            "No saved quotes",
+                            AppLocalizations.of(context)!.no_saved_quotes,
                             textAlign: TextAlign.center,
                             style: textStyle.apply(
                               color:
