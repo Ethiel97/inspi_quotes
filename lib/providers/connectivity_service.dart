@@ -34,8 +34,10 @@ class ConnectivityService {
   notify(status) {
     if (status == ConnectivityStatus.offline) {
       Get.snackbar(
-        AppLocalizations.of(Get.context!)!.notification,
-        AppLocalizations.of(Get.context!)!.check_network_connection,
+        'ehlll',
+        'hasf',
+        // AppLocalizations.of(Get.context!)!.notification,
+        // AppLocalizations.of(Get.context!)!.check_network_connection,
         duration: const Duration(seconds: 7),
         backgroundColor: accentColor,
         snackPosition: SnackPosition.TOP,

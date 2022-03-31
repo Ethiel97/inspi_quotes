@@ -3,7 +3,6 @@ import 'package:jiffy/jiffy.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 import 'package:smart_quotes/providers/theme_provider.dart';
-import 'package:smart_quotes/utils/constants.dart';
 import 'package:smart_quotes/utils/text_styles.dart';
 import 'package:smart_quotes/view_models/quote_view_model.dart';
 import 'package:smart_quotes/views/base_view.dart';
@@ -53,7 +52,7 @@ class _FavoriteQuotesScreenState extends State<FavoriteQuotesScreen> {
                       height: 8,
                     ),
                     Text(
-                        AppLocalizations.of(context)!.favorite_quote,
+                      AppLocalizations.of(context)!.favorite_quote,
                       style: textStyle.apply(
                         color: Theme.of(context).textTheme.bodyText1?.color,
                         fontWeightDelta: 5,

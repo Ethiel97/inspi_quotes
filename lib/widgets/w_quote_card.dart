@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:screenshot/screenshot.dart';
 import 'package:smart_quotes/models/quote.dart';
 import 'package:smart_quotes/providers/navigation_provider.dart';
 import 'package:smart_quotes/providers/theme_provider.dart';
@@ -10,7 +11,7 @@ import 'package:tinycolor2/tinycolor2.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class WQuoteCard extends StatelessWidget {
-  const WQuoteCard({
+  WQuoteCard({
     required Key key,
     required this.quote,
     required this.onTranslate,
@@ -23,175 +24,180 @@ class WQuoteCard extends StatelessWidget {
 
   final VoidCallback onTranslate;
 
+  final ScreenshotController _screenshotController = ScreenshotController();
+
   @override
   Widget build(BuildContext context) =>
       Consumer2<ThemeProvider, NavigationProvider>(
-        builder: (context, themeProvider, navigationProvider, _) => Container(
-          padding: const EdgeInsets.symmetric(
-            vertical: 12,
-            horizontal: 18,
-          ),
-          decoration: BoxDecoration(
-            color: themeProvider.currentTheme == 'dark'
-                ? TinyColor(Theme.of(context).backgroundColor).color.tint(5)
-                : TinyColor(Theme.of(context).backgroundColor)
-                    .color
-                    .lighten(15),
-            borderRadius: BorderRadius.circular(
-              20,
+        builder: (context, themeProvider, navigationProvider, _) => Screenshot(
+          controller: _screenshotController,
+          child: Container(
+            padding: const EdgeInsets.symmetric(
+              vertical: 12,
+              horizontal: 18,
             ),
-            border: Border.all(
+            decoration: BoxDecoration(
               color: themeProvider.currentTheme == 'dark'
-                  ? whiteBackgroundColor.withOpacity(.09)
-                  : screenBackgroundColor.withOpacity(.008),
-              width: .8,
-            ),
-            boxShadow: [
-              BoxShadow(
-                offset: const Offset(0, 5),
-                blurRadius: 10,
+                  ? TinyColor(Theme.of(context).backgroundColor).color.tint(5)
+                  : TinyColor(Theme.of(context).backgroundColor)
+                      .color
+                      .lighten(15),
+              borderRadius: BorderRadius.circular(
+                20,
+              ),
+              border: Border.all(
                 color: themeProvider.currentTheme == 'dark'
-                    ? whiteBackgroundColor.withOpacity(.02)
-                    : screenBackgroundColor.withOpacity(.02),
-              )
-            ],
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Wrap(
-                spacing: 8.0,
-                children: quote.tags
-                    .map(
-                      (e) => GestureDetector(
-                        onTap: () {
-                          /*navigationProvider.currentIndex = 1;
+                    ? whiteBackgroundColor.withOpacity(.09)
+                    : screenBackgroundColor.withOpacity(.008),
+                width: .8,
+              ),
+              boxShadow: [
+                BoxShadow(
+                  offset: const Offset(0, 5),
+                  blurRadius: 10,
+                  color: themeProvider.currentTheme == 'dark'
+                      ? whiteBackgroundColor.withOpacity(.02)
+                      : screenBackgroundColor.withOpacity(.02),
+                )
+              ],
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Wrap(
+                  spacing: 8.0,
+                  children: quote.tags
+                      .map(
+                        (e) => GestureDetector(
+                          onTap: () {
+                            /*navigationProvider.currentIndex = 1;
 
-                          Tag tag =
-                          viewModel.tags.firstWhere((tag) => tag.name == e);
-                          viewModel.selectTag(tag);*/
-                        },
-                        child: Text(
-                          "#$e",
-                          style: textStyle.apply(
-                            fontSizeDelta: -4,
-                            color: Theme.of(context)
-                                .textTheme
-                                .bodyText1
-                                ?.color
-                                ?.withOpacity(.8),
+                            Tag tag =
+                            viewModel.tags.firstWhere((tag) => tag.name == e);
+                            viewModel.selectTag(tag);*/
+                          },
+                          child: Text(
+                            "#$e",
+                            style: textStyle.apply(
+                              fontSizeDelta: -5,
+                              color: Theme.of(context)
+                                  .textTheme
+                                  .bodyText1
+                                  ?.color
+                                  ?.withOpacity(.8),
+                            ),
                           ),
                         ),
-                      ),
-                    )
-                    .toList(),
-              ),
-              const SizedBox(
-                height: 16,
-              ),
-              Expanded(
-                child: Align(
-                  alignment: Alignment.center,
-                  child: SingleChildScrollView(
-                    child: Text(
-                      quote.content,
-                      softWrap: true,
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 10,
-                      style: textStyle.apply(
-                        fontSizeDelta: 13,
-                        fontWeightDelta: 10,
-                        color: Theme.of(context).textTheme.bodyText1?.color,
+                      )
+                      .toList(),
+                ),
+                const SizedBox(
+                  height: 16,
+                ),
+                Expanded(
+                  child: Align(
+                    alignment: Alignment.center,
+                    child: SingleChildScrollView(
+                      child: Text(
+                        quote.content,
+                        softWrap: true,
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 10,
+                        style: textStyle.apply(
+                          fontSizeDelta: 13,
+                          fontWeightDelta: 10,
+                          color: Theme.of(context).textTheme.bodyText1?.color,
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
-              const SizedBox(
-                height: 16,
-              ),
-              Text(
-                "${AppLocalizations.of(context)!.by} ${quote.author}",
-                style: textStyle.apply(
-                  color: Theme.of(context)
-                      .textTheme
-                      .bodyText1
-                      ?.color
-                      ?.withOpacity(.8),
-                  fontSizeDelta: -2,
+                const SizedBox(
+                  height: 16,
                 ),
-              ),
-
-              /*const SizedBox(
-                height: 16,
-              ),
-              MaterialButton(
-                elevation: 0.0,
-                onPressed: () {},
-                color: Theme.of(context).textTheme.bodyText1?.color,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(
-                    20,
-                  ),
-                ),
-                child: Text(
-                  'Read more'.toUpperCase(),
+                Text(
+                  "${AppLocalizations.of(context)!.by} ${quote.author}",
                   style: textStyle.apply(
-                    color: Theme.of(context).backgroundColor,
+                    color: Theme.of(context)
+                        .textTheme
+                        .bodyText1
+                        ?.color
+                        ?.withOpacity(.8),
                     fontSizeDelta: -2,
                   ),
                 ),
-              ),*/
-              // const Spacer(),
-              const SizedBox(
-                height: 16,
-              ),
 
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: [
-                      IconButton(
-                        onPressed: () {
-                          viewModel.shareQuote(quote);
-                        },
-                        color: Theme.of(context).iconTheme.color,
-                        icon: const Icon(
-                          Icons.share,
-                          size: 22,
-                        ),
-                      ),
-                      IconButton(
-                        onPressed: () {
-                          viewModel.translateQuote(context, quote);
-
-                          onTranslate();
-                        },
-                        color: Theme.of(context).iconTheme.color,
-                        icon: const Icon(
-                          Icons.translate,
-                          size: 22,
-                        ),
-                      ),
-                    ],
-                  ),
-                  IconButton(
-                    onPressed: () {
-                      viewModel.bookmark(quote);
-                    },
-                    color: Theme.of(context).iconTheme.color,
-                    icon: Icon(
-                      quote.saved
-                          ? Icons.bookmark
-                          : Icons.bookmark_border_outlined,
-                      size: 22,
+                /*const SizedBox(
+                  height: 16,
+                ),
+                MaterialButton(
+                  elevation: 0.0,
+                  onPressed: () {},
+                  color: Theme.of(context).textTheme.bodyText1?.color,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(
+                      20,
                     ),
                   ),
-                ],
-              ),
-            ],
+                  child: Text(
+                    'Read more'.toUpperCase(),
+                    style: textStyle.apply(
+                      color: Theme.of(context).backgroundColor,
+                      fontSizeDelta: -2,
+                    ),
+                  ),
+                ),*/
+                // const Spacer(),
+                const SizedBox(
+                  height: 16,
+                ),
+
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        IconButton(
+                          onPressed: () {
+                            viewModel.shareQuote(quote, _screenshotController);
+                          },
+                          color: Theme.of(context).iconTheme.color,
+                          icon: const Icon(
+                            Icons.share,
+                            size: 22,
+                          ),
+                        ),
+                        IconButton(
+                          onPressed: () {
+                            viewModel.translateQuote(context, quote);
+
+                            onTranslate();
+                          },
+                          color: Theme.of(context).iconTheme.color,
+                          icon: const Icon(
+                            Icons.translate,
+                            size: 22,
+                          ),
+                        ),
+                      ],
+                    ),
+                    IconButton(
+                      onPressed: () {
+                        viewModel.bookmark(quote);
+                      },
+                      color: Theme.of(context).iconTheme.color,
+                      icon: Icon(
+                        quote.saved
+                            ? Icons.bookmark
+                            : Icons.bookmark_border_outlined,
+                        size: 22,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       );

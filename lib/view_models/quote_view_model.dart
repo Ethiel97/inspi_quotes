@@ -1,8 +1,11 @@
 import 'dart:async';
+import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:sizer/sizer.dart';
 import 'package:smart_quotes/main.dart';
 import 'package:smart_quotes/models/quote.dart';
@@ -12,6 +15,7 @@ import 'package:smart_quotes/utils/text_styles.dart';
 import 'package:tinycolor2/tinycolor2.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'base_view_model.dart';
+import 'package:screenshot/screenshot.dart';
 
 class QuoteViewModel extends BaseViewModel {
   List<Quote> quotes = [];
@@ -23,6 +27,8 @@ class QuoteViewModel extends BaseViewModel {
   List<Tag> selectedTags = [];
 
   late Quote quote;
+
+  ScreenshotController screenshotController = ScreenshotController();
 
   @override
   int get size => quotes.length;
@@ -158,9 +164,26 @@ class QuoteViewModel extends BaseViewModel {
     }
   }
 
-  void shareQuote(Quote quote) {
-    Share.share(
-        '${AppLocalizations.of(Get.context!)!.check_out_this_quote} "${quote.content}"\n ${AppLocalizations.of(Get.context!)!.on_dailyQ}: ${GetPlatform.isAndroid ? "https://bit.ly/dailyQ_ps" : ""}');
+  void shareQuote(
+      Quote quote, ScreenshotController screenshotController) async {
+    String shareText =
+        '${AppLocalizations.of(Get.context!)!.check_out_this_quote} "${quote.content}"\n ${AppLocalizations.of(Get.context!)!.on_dailyQ}: ${GetPlatform.isAndroid ? "https://bit.ly/dailyQ_ps" : "https://apple.co/3DsdJba"}';
+    Uint8List? _imageFile = await screenshotController.capture(
+        delay: const Duration(milliseconds: 50));
+
+    if (_imageFile != null) {
+      final directory = await getApplicationDocumentsDirectory();
+      final imagePath = File("${directory.path}/${quote.id}.png");
+      await imagePath.writeAsBytes(_imageFile);
+
+      Share.shareFiles(
+        [imagePath.path],
+        subject: 'dailyQ',
+        text: shareText,
+      );
+    } else {
+      Share.share(shareText);
+    }
   }
 
   void translateQuote(BuildContext context, Quote quote) async {
@@ -234,8 +257,8 @@ class QuoteViewModel extends BaseViewModel {
         alignment: Alignment.centerLeft,
         padding: const EdgeInsets.all(14),
         // alignment: ,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: ListView(
+          // crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SizedBox(
               height: 12,
