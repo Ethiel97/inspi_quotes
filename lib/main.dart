@@ -1,8 +1,11 @@
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/route_manager.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:overlay_support/overlay_support.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 import 'package:smart_quotes/providers/navigation_provider.dart';
@@ -29,8 +32,17 @@ void initHiveBox() async {
   await Hive.openBox<Tag>(tagsBox);
 }
 
+Future<void> myBackgroundMessageHandler(RemoteMessage message) async {
+  await Firebase.initializeApp();
+
+  print("messaging background...");
+  // Or do other work.
+}
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  FirebaseMessaging.onBackgroundMessage(myBackgroundMessageHandler);
   initHiveBox();
   await dotenv.load(fileName: '.env');
 
@@ -77,20 +89,22 @@ class _MyAppState extends State<MyApp> {
 
     return Consumer<ThemeProvider>(
       builder: (context, themeProvider, _) => Sizer(
-        builder: (context, orientation, deviceType) => GetMaterialApp(
-          title: 'Inspi Quotes',
-          localizationsDelegates: const [
-            AppLocalizations.delegate,
-            GlobalMaterialLocalizations.delegate,
-            GlobalWidgetsLocalizations.delegate,
-            GlobalCupertinoLocalizations.delegate,
-          ],
-          supportedLocales: AppLocalizations.supportedLocales,
-          debugShowCheckedModeBanner: false,
-          theme: themeProvider.theme,
-          routes: appRoutes,
-          home: const SplashScreen(
-            key: ValueKey("spash"),
+        builder: (context, orientation, deviceType) => OverlaySupport(
+          child: GetMaterialApp(
+            title: 'Inspi Quotes',
+            localizationsDelegates: const [
+              AppLocalizations.delegate,
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
+            supportedLocales: AppLocalizations.supportedLocales,
+            debugShowCheckedModeBanner: false,
+            theme: themeProvider.theme,
+            routes: appRoutes,
+            home: const SplashScreen(
+              key: ValueKey("spash"),
+            ),
           ),
         ),
       ),

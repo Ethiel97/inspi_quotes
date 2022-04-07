@@ -29,6 +29,7 @@ if (keystorePropertiesFile.exists()) {
 
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
+apply plugin: 'com.google.gms.google-services'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
 android {
@@ -50,7 +51,7 @@ android {
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId "com.deventhusiast.quotes.smart_quotes"
-        minSdkVersion flutter.minSdkVersion
+        minSdkVersion 19
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
@@ -90,4 +91,15 @@ flutter {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    // Import the Firebase BoM
+
+    implementation platform('com.google.firebase:firebase-bom:29.2.1')
+
+
+    // Add the dependency for the Firebase SDK for Google Analytics
+
+    // When using the BoM, don't specify versions in Firebase dependencies
+
+    implementation 'com.google.firebase:firebase-analytics-ktx'
+
 }

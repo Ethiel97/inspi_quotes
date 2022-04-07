@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
@@ -12,6 +15,8 @@ import 'package:smart_quotes/utils/colors.dart';
 import 'package:smart_quotes/utils/text_styles.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import '../providers/notification_service.dart';
+import '../utils/constants.dart';
 import 'search_screen.dart';
 
 class MainScreen extends StatefulWidget {
@@ -24,6 +29,7 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   late NavigationProvider _navigationProvider;
   late ThemeProvider _themeProvider;
+  late FirebaseMessaging _firebaseMessaging;
 
   List<Widget> screens = [
     const QuotesScreen(key: ValueKey("quotes")),
@@ -59,11 +65,37 @@ class _MainScreenState extends State<MainScreen> {
   void initState() {
     super.initState();
 
+    _firebaseMessaging = FirebaseMessaging.instance;
+
+    _firebaseMessaging.subscribeToTopic(dailyRandomQuoteTopic);
+
+    FirebaseMessaging.onMessage.listen((event) {
+      NotificationService(event, context: Get.context!).showToast();
+    });
+
+    if (Platform.isIOS) {
+      _firebaseMessaging
+          .requestPermission(
+            alert: true,
+            announcement: false,
+            badge: true,
+            carPlay: false,
+            criticalAlert: false,
+            provisional: false,
+            sound: true,
+          )
+          .then((value) => null)
+          .catchError((error) {
+        print(error);
+      });
+    }
+
     Future.delayed(Duration.zero, () {
       SystemChrome.setSystemUIOverlayStyle(
         SystemUiOverlayStyle(
-            // systemNavigationBarColor: Colors.blue, // navigation bar color
-            statusBarColor: Theme.of(context).backgroundColor),
+          // systemNavigationBarColor: Colors.blue, // navigation bar color
+          statusBarColor: Theme.of(context).backgroundColor,
+        ),
       );
     });
   }
