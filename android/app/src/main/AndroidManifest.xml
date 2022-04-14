@@ -23,10 +23,11 @@
                 android:resource="@style/NormalTheme" />
             <meta-data
                 android:name="com.google.firebase.messaging.default_notification_icon"
-                android:resource="@drawable/ico" />
+                android:resource="@mipmap/ic_notify" />
             <meta-data
                 android:name="com.google.firebase.messaging.default_notification_color"
                 android:resource="@color/colorPrimary" />
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

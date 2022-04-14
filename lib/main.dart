@@ -91,7 +91,7 @@ class _MyAppState extends State<MyApp> {
       builder: (context, themeProvider, _) => Sizer(
         builder: (context, orientation, deviceType) => OverlaySupport(
           child: GetMaterialApp(
-            title: 'Inspi Quotes',
+            title: 'dailyQ',
             localizationsDelegates: const [
               AppLocalizations.delegate,
               GlobalMaterialLocalizations.delegate,

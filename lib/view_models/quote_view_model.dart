@@ -43,7 +43,7 @@ class QuoteViewModel extends BaseViewModel {
   @override
   FutureOr<void> init() async {
     boxQuotes = Hive.box(quotesBox);
-    await getRandomQuote();
+    // await getRandomQuote();
     await fetchTags();
     await fetchAll(query: {'page': 61, 'limit': 30});
     errorMessage = AppLocalizations.of(Get.context!)!.something_went_wrong;
@@ -188,6 +188,8 @@ class QuoteViewModel extends BaseViewModel {
 
   void translateQuote(BuildContext context, Quote quote) async {
     try {
+      // changeStatus();
+      isLoading = true;
       String translatedText = await apiRepository.translateToAppLocale(
         text: quote.content,
         source: "en",
@@ -197,6 +199,8 @@ class QuoteViewModel extends BaseViewModel {
       this.translatedText = translatedText;
 
       reloadState();
+      isLoading = false;
+
       showTranslateModal(context, this.translatedText);
       /* int quotePosition = quotes.indexOf(quote);
 
@@ -207,6 +211,7 @@ class QuoteViewModel extends BaseViewModel {
     } catch (e) {
       debugPrint("$e");
     } finally {
+      // changeStatus();
       finishLoading();
     }
   }

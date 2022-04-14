@@ -105,7 +105,7 @@ class WQuoteCard extends StatelessWidget {
                         overflow: TextOverflow.ellipsis,
                         maxLines: 10,
                         style: textStyle.apply(
-                          fontSizeDelta: 13,
+                          fontSizeDelta: 11.8,
                           fontWeightDelta: 10,
                           color: Theme.of(context).textTheme.bodyText1?.color,
                         ),
