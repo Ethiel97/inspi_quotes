@@ -15,7 +15,7 @@ abstract class BaseViewModel with ChangeNotifier {
   String errorMessage = "";
 
   final String? defaultLocale =
-      WidgetsBinding.instance?.window.locale.languageCode ?? "en";
+      WidgetsBinding.instance.window.locale.languageCode;
 
   FutureOr<void> _initState;
 
