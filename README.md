@@ -1,6 +1,6 @@
 # dailyQ
 
-### A modern quotes app
+## A modern quotes app
 
 * Fetch awesome quotes
 * Save your favorites quotes
