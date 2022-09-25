@@ -1,56 +1,34 @@
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/route_manager.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 import 'package:overlay_support/overlay_support.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 import 'package:smart_quotes/providers/navigation_provider.dart';
 import 'package:smart_quotes/providers/theme_provider.dart';
-import 'models/author.dart';
-import 'models/quote.dart';
-import 'models/tag.dart';
+import 'package:smart_quotes/utils/startup.dart';
+import 'package:smart_quotes/view_models/quote_view_model.dart';
+
 import 'providers/connectivity_service.dart';
 import 'screens/splash_screen.dart';
 import 'utils/app_router.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 var quotesBox = 'quotes';
 var authorsBox = 'authors';
 var tagsBox = 'tags';
 
-void initHiveBox() async {
-  await Hive.initFlutter();
-  Hive.registerAdapter(QuoteAdapter());
-  Hive.registerAdapter(TagAdapter());
-  Hive.registerAdapter(AuthorAdapter());
-  await Hive.openBox<Quote>(quotesBox);
-  await Hive.openBox<Author>(authorsBox);
-  await Hive.openBox<Tag>(tagsBox);
-}
-
-Future<void> myBackgroundMessageHandler(RemoteMessage message) async {
-  await Firebase.initializeApp();
-
-  print("messaging background...");
-  // Or do other work.
-}
-
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
-  FirebaseMessaging.onBackgroundMessage(myBackgroundMessageHandler);
-  initHiveBox();
-  await dotenv.load(fileName: '.env');
+  await Startup().init();
 
   runApp(
     MultiProvider(
       providers: [
         ChangeNotifierProvider<NavigationProvider>(
           create: (_) => NavigationProvider(),
+        ),
+        ChangeNotifierProvider<QuoteViewModel>(
+          create: (_) => QuoteViewModel(),
         ),
         ChangeNotifierProvider<ThemeProvider>(
           create: (_) => ThemeProvider(),

@@ -168,7 +168,7 @@ class WQuoteCard extends StatelessWidget {
                             size: 22,
                           ),
                         ),
-                        IconButton(
+                        /*IconButton(
                           onPressed: () {
                             viewModel.translateQuote(context, quote);
 
@@ -179,7 +179,7 @@ class WQuoteCard extends StatelessWidget {
                             Icons.translate,
                             size: 22,
                           ),
-                        ),
+                        ),*/
                       ],
                     ),
                     IconButton(

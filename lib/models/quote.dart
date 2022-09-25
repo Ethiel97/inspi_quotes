@@ -1,5 +1,8 @@
+import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:smart_quotes/repositories/api_repository.dart';
+import 'package:smart_quotes/utils/constants.dart';
 
 part 'quote.g.dart';
 
@@ -41,6 +44,27 @@ class Quote extends HiveObject {
     required this.dateAdded,
     this.saved = false,
   });
+
+  static Future<Quote> create(Map<String, dynamic> json) async {
+    Quote quote = Quote.fromJson(json);
+
+    final APIRepository apiRepository = APIRepository(apiUrl: apiUrl);
+
+    String translatedContent = await apiRepository.translateToAppLocale(
+        text: quote.content,
+        target: WidgetsBinding.instance.window.locale.languageCode);
+
+    return Quote(
+      author: quote.author,
+      authorSlug: quote.authorSlug,
+      id: quote.id,
+      length: quote.length,
+      content: translatedContent,
+      dateAdded: quote.dateAdded,
+      tags: quote.tags,
+      saved: quote.saved,
+    );
+  }
 
   factory Quote.fromJson(Map<String, dynamic> json) => _$QuoteFromJson(json);
 

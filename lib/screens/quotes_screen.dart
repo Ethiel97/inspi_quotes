@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:jiffy/jiffy.dart';
+import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 import 'package:smart_quotes/utils/text_styles.dart';
 import 'package:smart_quotes/view_models/quote_view_model.dart';
@@ -21,7 +22,7 @@ class _QuotesScreenState extends State<QuotesScreen> {
   @override
   Widget build(BuildContext context) => BaseView<QuoteViewModel>(
         key: UniqueKey(),
-        vmBuilder: (context) => QuoteViewModel(),
+        vmBuilder: (context) => Provider.of<QuoteViewModel>(context),
         builder: _buildScreen,
       );
 

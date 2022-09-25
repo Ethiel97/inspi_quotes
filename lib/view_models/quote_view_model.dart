@@ -168,13 +168,13 @@ class QuoteViewModel extends BaseViewModel {
       Quote quote, ScreenshotController screenshotController) async {
     String shareText =
         '${AppLocalizations.of(Get.context!)!.check_out_this_quote} "${quote.content}"\n ${AppLocalizations.of(Get.context!)!.on_dailyQ}: ${GetPlatform.isAndroid ? "https://bit.ly/dailyQ_ps" : "https://apple.co/3DsdJba"}';
-    Uint8List? _imageFile = await screenshotController.capture(
+    Uint8List? imageFile = await screenshotController.capture(
         delay: const Duration(milliseconds: 50));
 
-    if (_imageFile != null) {
+    if (imageFile != null) {
       final directory = await getApplicationDocumentsDirectory();
       final imagePath = File("${directory.path}/${quote.id}.png");
-      await imagePath.writeAsBytes(_imageFile);
+      await imagePath.writeAsBytes(imageFile);
 
       Share.shareFiles(
         [imagePath.path],
@@ -209,7 +209,7 @@ class QuoteViewModel extends BaseViewModel {
       quotes.replaceRange(quotePosition, quotePosition + 1, [quote]);*/
 
     } catch (e) {
-      debugPrint("$e");
+      debugPrint("translation error: $e");
     } finally {
       // changeStatus();
       finishLoading();
@@ -261,6 +261,15 @@ class QuoteViewModel extends BaseViewModel {
       builder: (context) => Container(
         alignment: Alignment.centerLeft,
         padding: const EdgeInsets.all(14),
+        height: 24.h,
+        width: 100.w,
+        decoration: BoxDecoration(
+          color: Theme.of(context).backgroundColor,
+          borderRadius: const BorderRadius.only(
+            topLeft: Radius.circular(12),
+            topRight: Radius.circular(12),
+          ),
+        ),
         // alignment: ,
         child: ListView(
           // crossAxisAlignment: CrossAxisAlignment.start,
@@ -288,15 +297,6 @@ class QuoteViewModel extends BaseViewModel {
               ),
             ),
           ],
-        ),
-        height: 24.h,
-        width: 100.w,
-        decoration: BoxDecoration(
-          color: Theme.of(context).backgroundColor,
-          borderRadius: const BorderRadius.only(
-            topLeft: Radius.circular(12),
-            topRight: Radius.circular(12),
-          ),
         ),
       ),
     );

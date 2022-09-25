@@ -61,7 +61,17 @@ class APIRepository implements IRrepository {
     var data = jsonDecode(response.body);
     // print(data);
 
-    return List<Quote>.from(data['results'].map((x) => Quote.fromJson(x)));
+    List<Quote> quotes = [];
+    for (var quoteJson in data['results']) {
+      var tempQuote = await Quote.create(quoteJson);
+      quotes.add(tempQuote);
+    }
+
+    return quotes;
+
+    /*return List<Quote>.from(data['results'].map((x) async {
+      return (await Quote.create(x));
+    }));*/
   }
 
   @override
@@ -125,7 +135,7 @@ class APIRepository implements IRrepository {
 
     final response = await client.get(Uri.parse(apiUrl + url));
 
-    return Quote.fromJson(jsonDecode(response.body));
+    return (await Quote.create(jsonDecode(response.body)));
   }
 
   @override
@@ -141,8 +151,12 @@ class APIRepository implements IRrepository {
     required String text,
     String source = "en",
     required String target,
-  }) async =>
-      (await GoogleTranslator().translate(text, from: source, to: target)).text;
+  }) async {
+    return (target != "en")
+        ? (await GoogleTranslator().translate(text, from: source, to: target))
+            .text
+        : text;
+  }
 
   @override
   Future<List<Quote>> getQuotesForTag(String? tags) async {
@@ -154,6 +168,12 @@ class APIRepository implements IRrepository {
 
     var data = jsonDecode(response.body);
 
-    return List<Quote>.from(data['results'].map((x) => Quote.fromJson(x)));
+    List<Quote> quotes = [];
+    for (var quoteJson in data['results']) {
+      var tempQuote = await Quote.create(quoteJson);
+      quotes.add(tempQuote);
+    }
+
+    return quotes;
   }
 }

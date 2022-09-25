@@ -11,7 +11,7 @@ import 'colors.dart';
 var textStyle = GoogleFonts.workSans(
   fontSize: 17,
   fontWeight: FontWeight.normal,
-  color: WidgetsBinding.instance?.window.platformBrightness == Brightness.dark
+  color: WidgetsBinding.instance.window.platformBrightness == Brightness.dark
       ? darkColor
       : Colors.white,
   decoration: TextDecoration.none,
