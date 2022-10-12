@@ -26,7 +26,7 @@ class _SearchScreenState extends State<SearchScreen> {
   @override
   Widget build(BuildContext context) => BaseView<QuoteViewModel>(
         key: UniqueKey(),
-        vmBuilder: (context) => QuoteViewModel(),
+        vmBuilder: (context) => Provider.of<QuoteViewModel>(context),
         builder: _buildScreen,
       );
 
